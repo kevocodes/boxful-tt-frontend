@@ -17,9 +17,9 @@ function Layout({ children }: LayoutProps) {
         <Col
           xs={24}
           lg={10}
-          className="flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 bg-white h-full relative z-20"
+          className="flex flex-col justify-center items-center p-8 sm:p-10 lg:p-12 bg-white h-full relative z-20"
         >
-          <div className="w-full max-w-md space-y-8">{children}</div>
+          {children}
         </Col>
 
         {/* Right Column (Hidden on mobile) */}

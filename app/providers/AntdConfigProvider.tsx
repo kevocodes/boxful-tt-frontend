@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ConfigProvider } from "antd";
+import theme from "@/theme/themeConfig";
 
 interface AntdConfigProviderProps {
   children: React.ReactNode;
@@ -10,17 +11,7 @@ interface AntdConfigProviderProps {
 const AntdConfigProvider: React.FC<AntdConfigProviderProps> = ({
   children,
 }) => {
-  return (
-    <ConfigProvider
-      theme={{
-        token: {
-          fontFamily: "var(--font-mona-sans)",
-        },
-      }}
-    >
-      {children}
-    </ConfigProvider>
-  );
+  return <ConfigProvider theme={theme}>{children}</ConfigProvider>;
 };
 
 export default AntdConfigProvider;
