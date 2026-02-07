@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import AntdConfigProvider from "./providers/AntdConfigProvider";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: "Boxful",
@@ -24,10 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${monaSans.variable} antialiased`}
-      >
-        <AntdRegistry>{children}</AntdRegistry>
+      <body className={`${monaSans.variable} antialiased`}>
+        <AntdRegistry>
+          <AntdConfigProvider>{children}</AntdConfigProvider>
+        </AntdRegistry>
       </body>
     </html>
   );
