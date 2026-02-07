@@ -83,11 +83,6 @@ function EmailValidationPage() {
   return (
     <div className="flex flex-col justify-center items-center h-full w-full px-4">
       <div className="w-full max-w-md text-center">
-        {/* Logo/Icon Area - Placeholder based on user image */}
-        <div className="mb-6 flex justify-center">
-          {/* You might want to add an icon here similar to the design */}
-        </div>
-
         <Title level={3} className="mb-4 font-bold! text-[#11142D]">
           Verificación de correo electrónico
         </Title>
@@ -112,6 +107,7 @@ function EmailValidationPage() {
           <Input.OTP
             size="large"
             length={6}
+            value={otp}
             onChange={onChange}
             onInput={onSharedSubmit}
           />
