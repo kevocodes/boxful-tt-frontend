@@ -18,3 +18,8 @@ export interface RegisterFormValues {
   password: string;
   confirmPassword: string;
 }
+
+export interface ResetPasswordFormValues {
+  password: string;
+  confirmPassword: string;
+}

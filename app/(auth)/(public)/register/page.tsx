@@ -2,23 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  Form,
-  Input,
-  Button,
-  Typography,
-  Select,
-  DatePicker,
-  Modal,
-} from "antd";
+import { Form, Input, Button, Typography, Select, DatePicker } from "antd"; // Removed Modal
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
   LeftOutlined,
   CalendarOutlined,
-  WarningFilled,
-} from "@ant-design/icons";
-import PhoneInput from "../../components/PhoneInput";
+} from "@ant-design/icons"; // Removed WarningFilled
+import StatusModal from "../../../components/StatusModal"; // Added StatusModal
+import PhoneInput from "../../../components/PhoneInput";
 import { genders } from "@/app/constants/genders";
 import { RegisterFormValues } from "@/types/auth";
 
@@ -57,7 +49,10 @@ function RegisterPage() {
         {/* Header */}
         <div className="mb-10 text-center lg:text-left lg:w-full">
           <div className="flex items-center mb-2">
-            <Link href="/login" className="text-gray-500! hover:text-gray-700! mr-2">
+            <Link
+              href="/login"
+              className="text-gray-500! hover:text-gray-700! mr-2"
+            >
               <LeftOutlined style={{ fontSize: "16px" }} />
             </Link>
             <Title level={3} className="m-0! font-bold! text-[#11142D]">
@@ -144,7 +139,7 @@ function RegisterPage() {
                 className="w-full"
                 placeholder="Seleccionar"
                 format="DD/MM/YYYY"
-                suffixIcon={<CalendarOutlined style={{ color: "#11142D" }} />}
+                suffixIcon={<CalendarOutlined />}
               />
             </Form.Item>
 
@@ -261,44 +256,27 @@ function RegisterPage() {
       </div>
 
       {/* Confirmation Modal */}
-      <Modal
+      {/* Status Modal */}
+      <StatusModal
         open={isModalOpen}
-        onCancel={handleModalCancel}
-        footer={null}
-        width={400}
-        centered
-        className="text-center"
-      >
-        <div className="flex flex-col items-center justify-center py-6">
-          <div className="bg-orange-100 p-4 rounded-full mb-4 aspect-square">
-            <WarningFilled className="text-orange-500! text-[44px]!" />
-          </div>
-
-          <Title level={4} className="mb-4 text-center">
+        onClose={handleModalCancel}
+        onConfirm={handleModalOk}
+        type="warning"
+        title={
+          <>
             Confirmar número de <span className="font-bold">teléfono</span>
-          </Title>
-          <Text className="text-center text-gray-600 mb-8 block">
+          </>
+        }
+        description={
+          <>
             Está seguro de que desea continuar con el número{" "}
             <span className="font-bold whitespace-nowrap">{phoneNumber}</span>?
-          </Text>
-          <div className="flex justify-end gap-4 w-full">
-            <Button
-              type="default"
-              onClick={handleModalCancel}
-              className="font-semibold!"
-            >
-              Cancelar
-            </Button>
-            <Button
-              type="primary"
-              onClick={handleModalOk}
-              className="font-semibold!"
-            >
-              Aceptar
-            </Button>
-          </div>
-        </div>
-      </Modal>
+          </>
+        }
+        confirmText="Aceptar"
+        cancelText="Cancelar"
+        showCancel={true}
+      />
     </>
   );
 }
