@@ -1,33 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Form, Input, Button, Typography } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import HorizontalLogo from "@/app/assets/svgs/horizontalLogo.svg";
-import { LoginValues } from "@/types/auth";
+import { LoginFormValues } from "@/types/auth";
 
 const { Title, Text } = Typography;
 
-
 function LoginPage() {
-  const onFinish = (values: LoginValues) => {
+  const onFinish = (values: LoginFormValues) => {
     console.log("Received values of form: ", values);
   };
 
   return (
-    <div className="w-full h-full flex flex-col">
-      {/* Logo */}
-      <div>
-        <Image
-          src={HorizontalLogo}
-          alt="Boxful Logo"
-          width={150}
-          height={40}
-          priority
-        />
-      </div>
-
       <div className="flex-1 flex flex-col justify-center items-center h-full">
         {/* Header */}
         <div className="mb-10 text-center lg:text-left lg:w-full">
@@ -96,7 +81,11 @@ function LoginPage() {
           </div>
 
           <Form.Item className="mb-10">
-            <Button type="primary" htmlType="submit" className="w-full">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full h-10 font-semibold! text-base!"
+            >
               Iniciar Sesión
             </Button>
           </Form.Item>
@@ -115,7 +104,6 @@ function LoginPage() {
           </div>
         </Form>
       </div>
-    </div>
   );
 }
 

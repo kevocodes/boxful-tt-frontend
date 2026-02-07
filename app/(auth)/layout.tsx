@@ -4,6 +4,7 @@ import LoginBanner from "@/app/assets/images/loginbanner.png";
 import MainStrip from "@/app/assets/svgs/mainstrip.svg";
 import SafetyStrip from "@/app/assets/svgs/safetystrip.svg";
 import ShipmentStrip from "@/app/assets/svgs/shipmentstrip.svg";
+import HorizontalLogo from "@/app/assets/svgs/horizontalLogo.svg";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,7 +20,19 @@ function Layout({ children }: LayoutProps) {
           lg={10}
           className="flex flex-col justify-center items-center p-8 sm:p-10 lg:p-12 bg-white h-full relative z-20"
         >
+              <div className="w-full h-full flex flex-col">
+      {/* Logo */}
+      <div>
+        <Image
+          src={HorizontalLogo}
+          alt="Boxful Logo"
+          width={150}
+          height={40}
+          priority
+        />
+      </div>
           {children}
+      </div>
         </Col>
 
         {/* Right Column (Hidden on mobile) */}
