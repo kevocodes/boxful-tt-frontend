@@ -1,35 +1,55 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
-import { Form, Input, Button, Typography } from "antd";
+import { Form, Input, Button, Typography, Spin, notification } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import StatusModal from "../../../../../components/StatusModal";
-import { ResetPasswordFormValues } from "@/src/types/auth";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import StatusModal from "@/components/StatusModal";
+import { ResetPasswordFormValues } from "@/types/auth";
+import { AuthService } from "@/services/auth.service";
+import { ApiResponse } from "@/types/api";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function ResetPasswordPage() {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const params = useParams();
-  const token = params?.token;
+  const token = params?.token as string;
 
-  useEffect(() => {
-    if (!token) {
-      // Handle missing token case
-      console.log("No token provided");
-    } else {
-      console.log("Token provided", token);
-    }
-  }, [token]);
+  const { isLoading: isValidatingToken, isError: isTokenInvalid } = useQuery({
+    queryKey: ["validate-reset-token", token],
+    queryFn: () => AuthService.validateResetPasswordToken(token),
+    enabled: !!token,
+    retry: false,
+    staleTime: 0,
+    gcTime: 0,
+  });
+
+  const { mutate: resetPassword, isPending: isResetting } = useMutation({
+    mutationFn: AuthService.resetPassword,
+    onSuccess: () => {
+      setIsModalOpen(true);
+    },
+    onError: (error: AxiosError<ApiResponse>) => {
+      notification.error({
+        message: "Error",
+        description:
+          (error.response?.data?.message as string) ||
+          "Ocurrió un error al restablecer la contraseña. Por favor, inténtelo de nuevo.",
+      });
+    },
+  });
 
   const onFinish = (values: ResetPasswordFormValues) => {
-    console.log("Reset password", values);
-    // Mock API call
-    setIsModalOpen(true);
+    resetPassword({
+      token,
+      password: values.password,
+    });
   };
 
   const handleModalClose = () => {
@@ -37,7 +57,16 @@ function ResetPasswordPage() {
     router.push("/login");
   };
 
-  if (!token) {
+  if (isValidatingToken) {
+    return (
+      <div className="flex flex-col justify-center items-center h-full w-full">
+        <Spin size="large" />
+        <Text className="mt-4 text-gray-500">Validando token...</Text>
+      </div>
+    );
+  }
+
+  if (!token || isTokenInvalid) {
     return (
       <div className="flex flex-col justify-center items-center h-full w-full">
         <Title level={4} className="text-red-500">
@@ -83,17 +112,18 @@ function ResetPasswordPage() {
                 </span>
               }
               name="password"
-              rules={[
+             rules={[
                 { required: true, message: "Por favor ingresa tu contraseña" },
+                {
+                  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/,
+                  message:
+                    "La contraseña debe tener al menos 6 caracteres, incluir una mayúscula, una minúscula, un número y un carácter especial",
+                },
               ]}
               className="mb-4"
             >
-              <Input.Password
+              <Input
                 placeholder="Digita contraseña"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-                className="h-10"
               />
             </Form.Item>
 
@@ -121,12 +151,8 @@ function ResetPasswordPage() {
               ]}
               className="mb-10"
             >
-              <Input.Password
+              <Input
                 placeholder="Digita contraseña"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-                className="h-10"
               />
             </Form.Item>
 
@@ -134,6 +160,7 @@ function ResetPasswordPage() {
               <Button
                 type="primary"
                 htmlType="submit"
+                loading={isResetting}
                 className="h-10 font-semibold! text-base! px-8 bg-[#1B1F3B] w-fit ml-auto"
               >
                 Cambiar contraseña

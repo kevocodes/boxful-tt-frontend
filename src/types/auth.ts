@@ -34,6 +34,11 @@ export interface ResetPasswordFormValues {
   confirmPassword: string;
 }
 
+export interface ResetPasswordDto {
+  token: string;
+  password: string;
+}
+
 export interface ValidAuthDto {
   access_token: string;
   user: {
