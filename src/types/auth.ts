@@ -8,7 +8,7 @@ export interface LoginFormValues {
 export interface RegisterFormValues {
   firstName: string;
   lastName: string;
-  sex: string;
+  gender: string;
   birthDate: Dayjs;
   email: string;
   whatsapp: {
@@ -19,7 +19,31 @@ export interface RegisterFormValues {
   confirmPassword: string;
 }
 
+export interface RegisterDto {
+  name: string;
+  lastname: string;
+  password: string;
+  email: string;
+  gender: string;
+  birthDate: string;
+  phoneNumber: string;
+}
+
 export interface ResetPasswordFormValues {
   password: string;
   confirmPassword: string;
+}
+
+export interface ValidAuthDto {
+  access_token: string;
+  user: {
+    id: string;
+    name: string;
+    lastname: string;
+    email: string;
+    role: string;
+    emailVerified: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
 }

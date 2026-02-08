@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Form, Input, Button, Typography, Select, DatePicker } from "antd";
+import { useRouter } from "next/navigation";
+import { Form, Input, Button, Typography, Select, DatePicker, App } from "antd";
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
@@ -12,31 +13,44 @@ import {
 import StatusModal from "@/components/StatusModal";
 import PhoneInput from "@/components/PhoneInput";
 import { genders } from "@/constants/genders";
+import { AuthService } from "@/services/auth.service";
 import { RegisterFormValues } from "@/types/auth";
+import { useMutation } from "@tanstack/react-query";
+import { getErrorMessage } from "@/utils/error";
+import { registerMapper } from "@/mappers/auth.mapper";
 
 const { Title, Text } = Typography;
 
 function RegisterPage() {
-  const [form] = Form.useForm();
+  const { message } = App.useApp();
+  const router = useRouter();
+
+  const { mutateAsync: register, isPending: loading } = useMutation({
+    mutationFn: AuthService.register,
+    onSuccess: () => {
+      message.success("Registro exitoso");
+      setIsModalOpen(false);
+      router.push("/login");
+    },
+    onError: (error) => {
+      const errorMsg = getErrorMessage(error);
+      message.error(errorMsg);
+    },
+  });
+
+  const [form] = Form.useForm<RegisterFormValues>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const onFinish = (values: RegisterFormValues) => {
-    // Show confirmation modal instead of submitting immediately
-    // Get the phone number from values to display in modal
-    // Values now has "whatsapp" as an object { countryCode, number }
     const phone = values.whatsapp?.countryCode + " " + values.whatsapp?.number;
     setPhoneNumber(phone);
     setIsModalOpen(true);
   };
 
-  const handleModalOk = () => {
-    // Submit the form or call API here
-    console.log("Form submitted with phone confirmed:", phoneNumber);
-    console.log("Form values:", form.getFieldsValue());
-    setIsModalOpen(false);
-    // You would typically call an API here
-    // form.submit(); // If you wanted to submit completely, but onFinish is already triggered.
+  const handleModalOk = async () => {
+    const values = await form.validateFields();
+    await register(registerMapper(values));
   };
 
   const handleModalCancel = () => {
@@ -112,7 +126,7 @@ function RegisterPage() {
                   Sexo
                 </span>
               }
-              name="sex"
+              name="gender"
               rules={[
                 { required: true, message: "Por favor selecciona tu sexo" },
               ]}
@@ -201,6 +215,11 @@ function RegisterPage() {
               name="password"
               rules={[
                 { required: true, message: "Por favor ingresa tu contraseña" },
+                {
+                  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/,
+                  message:
+                    "La contraseña debe tener al menos 6 caracteres, incluir una mayúscula, una minúscula, un número y un carácter especial",
+                },
               ]}
             >
               <Input.Password
@@ -276,6 +295,7 @@ function RegisterPage() {
         confirmText="Aceptar"
         cancelText="Cancelar"
         showCancel={true}
+        confirmLoading={loading}
       />
     </>
   );

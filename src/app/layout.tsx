@@ -3,6 +3,8 @@ import { Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import AntdConfigProvider from "@/providers/AntdConfigProvider";
+import SessionProvider from "@/providers/SessionProvider";
+import QueryProvider from "@/providers/QueryProvider";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
@@ -25,9 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${monaSans.variable} antialiased`}>
-        <AntdRegistry>
-          <AntdConfigProvider>{children}</AntdConfigProvider>
-        </AntdRegistry>
+        <SessionProvider>
+          <QueryProvider>
+            <AntdRegistry>
+              <AntdConfigProvider>{children}</AntdConfigProvider>
+            </AntdRegistry>
+          </QueryProvider>
+        </SessionProvider>
       </body>
     </html>
   );

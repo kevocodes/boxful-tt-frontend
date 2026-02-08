@@ -14,6 +14,7 @@ interface StatusModalProps {
   confirmText?: string;
   cancelText?: string;
   showCancel?: boolean;
+  confirmLoading?: boolean;
 }
 
 const StatusModal: React.FC<StatusModalProps> = ({
@@ -26,6 +27,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
   confirmText = "Aceptar",
   cancelText = "Cancelar",
   showCancel = false,
+  confirmLoading = false,
 }) => {
   const isSuccess = type === "success";
 
@@ -75,6 +77,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
           <Button
             type="primary"
             onClick={onConfirm || onClose}
+            loading={confirmLoading}
             className={`font-semibold! bg-[#1B1F3B] ${
               showCancel ? "flex-1" : "w-full"
             }`}

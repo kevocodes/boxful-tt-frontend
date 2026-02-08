@@ -1,15 +1,46 @@
 "use client";
 
 import Link from "next/link";
-import { Form, Input, Button, Typography } from "antd";
+import { Form, Input, Button, Typography, App } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { LoginFormValues } from "@/src/types/auth";
+import { LoginFormValues } from "@/types/auth";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { getErrorMessage } from "@/utils/error";
+import { useMutation } from "@tanstack/react-query";
 
 const { Title, Text } = Typography;
 
 function LoginPage() {
-  const onFinish = (values: LoginFormValues) => {
-    console.log("Received values of form: ", values);
+  const router = useRouter();
+  const { message } = App.useApp();
+
+  const { mutateAsync: login, isPending: loading } = useMutation({
+    mutationFn: async (values: LoginFormValues) => {
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        throw new Error("Credenciales inválidas. Por favor intenta de nuevo.");
+      }
+
+      return result;
+    },
+    onSuccess: () => {
+      message.success("Inicio de sesión exitoso");
+      router.push("/");
+      router.refresh();
+    },
+    onError: (error) => {
+      message.error(error.message || getErrorMessage(error));
+    },
+  });
+
+  const onFinish = async (values: LoginFormValues) => {
+    await login(values);
   };
 
   return (
@@ -85,6 +116,7 @@ function LoginPage() {
             type="primary"
             htmlType="submit"
             className="w-full h-10 font-semibold! text-base!"
+            loading={loading}
           >
             Iniciar Sesión
           </Button>
