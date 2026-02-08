@@ -5,6 +5,7 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
   EMAIL_VALIDATION: "/email-validation",
+  SHIPMENTS: "/shipments",
   API: {
     AUTH: {
       LOGIN: "/auth/login",

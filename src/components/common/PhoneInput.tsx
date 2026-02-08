@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { InputNumber, Select, Space } from "antd";
-import { COUNTRY_CODES } from "../constants/countries";
+import { COUNTRY_CODES } from "../../constants/countries";
 
 interface PhoneValue {
   countryCode: string;
@@ -14,10 +14,10 @@ interface PhoneInputProps {
   onChange?: (value: PhoneValue) => void;
 }
 
-const PhoneInput: React.FC<PhoneInputProps> = ({
+const PhoneInput = ({
   value = { countryCode: "+503", number: "" },
   onChange,
-}) => {
+}: PhoneInputProps) => {
   const [internalValue, setInternalValue] = useState<PhoneValue>(value);
 
   useEffect(() => {

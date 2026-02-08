@@ -1,26 +1,10 @@
-"use client";
-import { Button } from "antd";
-import { signOut, useSession } from "next-auth/react";
-import { ROUTES } from "@/constants/routes";
+import { Metadata } from "next";
+import HomeView from "@/components/views/home/HomeView";
 
-function MainPage() {
-  const session = useSession();
+export const metadata: Metadata = {
+  title: "Crear orden",
+};
 
-  return (
-    <>
-      <div>
-        <h1>Main Page</h1>
-        <p>{session.data?.user?.email}</p>
-        <p>{session.data?.user?.isVerified?.toString()}</p>
-        <p>{session.data?.user?.lastname}</p>
-        <p>{session.data?.user?.name}</p>
-        <p>{session.data?.user?.role}</p>
-      </div>
-      <Button onClick={() => signOut({ callbackUrl: ROUTES.LOGIN })}>
-        Sign out
-      </Button>
-    </>
-  );
+export default function MainPage() {
+  return <HomeView />;
 }
-
-export default MainPage;
