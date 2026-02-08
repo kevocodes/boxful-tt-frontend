@@ -1,6 +1,6 @@
 "use client";
 
-import StatusModal from "../../../components/StatusModal";
+import StatusModal from "../../../../components/StatusModal";
 import Link from "next/link";
 import { useState } from "react";
 import { Form, Input, Button, Typography } from "antd";

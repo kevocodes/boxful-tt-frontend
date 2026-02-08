@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import AntdConfigProvider from "./providers/AntdConfigProvider";
+import AntdConfigProvider from "@/providers/AntdConfigProvider";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",

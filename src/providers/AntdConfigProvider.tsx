@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, App } from "antd";
 import theme from "@/theme/themeConfig";
 
 interface AntdConfigProviderProps {
@@ -11,7 +11,11 @@ interface AntdConfigProviderProps {
 const AntdConfigProvider: React.FC<AntdConfigProviderProps> = ({
   children,
 }) => {
-  return <ConfigProvider theme={theme}>{children}</ConfigProvider>;
+  return (
+    <ConfigProvider theme={theme}>
+      <App>{children}</App>
+    </ConfigProvider>
+  );
 };
 
 export default AntdConfigProvider;

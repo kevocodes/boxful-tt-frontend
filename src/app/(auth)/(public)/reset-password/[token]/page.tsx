@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import { Form, Input, Button, Typography } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import StatusModal from "../../../../components/StatusModal";
-import { ResetPasswordFormValues } from "@/types/auth";
+import StatusModal from "../../../../../components/StatusModal";
+import { ResetPasswordFormValues } from "@/src/types/auth";
 
 const { Title } = Typography;
 

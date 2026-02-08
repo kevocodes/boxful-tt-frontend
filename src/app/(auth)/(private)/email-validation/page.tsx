@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Typography, Input, Button, Statistic, notification } from "antd";
+import { Typography, Input, Button, Statistic, App } from "antd";
 import type { GetProps } from "antd";
 
 const { Title, Text } = Typography;
@@ -11,6 +11,7 @@ type OTPProps = GetProps<typeof Input.OTP>;
 
 function EmailValidationPage() {
   const router = useRouter();
+  const { notification } = App.useApp();
   const [otp, setOtp] = useState("");
   const [deadline, setDeadline] = useState<number>(0);
   const [canResend, setCanResend] = useState(false);
@@ -37,7 +38,7 @@ function EmailValidationPage() {
   const handleResend = () => {
     fetchExpirationDate();
     notification.success({
-      message: "Código reenviado",
+      title: "Código reenviado",
       description: "Se ha enviado un nuevo código de verificación a su correo.",
     });
   };
@@ -53,7 +54,7 @@ function EmailValidationPage() {
   const handleVerify = () => {
     if (otp.length !== 6) {
       notification.error({
-        message: "Código incompleto",
+        title: "Código incompleto",
         description: "Por favor ingresa el código de 6 dígitos completo.",
       });
       return;
@@ -66,13 +67,13 @@ function EmailValidationPage() {
       if (otp === "123456") {
         // Mock valid OTP
         notification.success({
-          message: "Verificación exitosa",
+          title: "Verificación exitosa",
           description: "Su correo ha sido verificado correctamente.",
         });
         router.push("/");
       } else {
         notification.error({
-          message: "Código inválido",
+          title: "Código inválido",
           description:
             "El código ingresado no es correcto. Intente nuevamente.",
         });

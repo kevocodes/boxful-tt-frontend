@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Form, Input, Button, Typography, Select, DatePicker } from "antd"; // Removed Modal
+import { Form, Input, Button, Typography, Select, DatePicker } from "antd";
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
   LeftOutlined,
   CalendarOutlined,
-} from "@ant-design/icons"; // Removed WarningFilled
-import StatusModal from "../../../components/StatusModal"; // Added StatusModal
-import PhoneInput from "../../../components/PhoneInput";
-import { genders } from "@/app/constants/genders";
+} from "@ant-design/icons";
+import StatusModal from "@/components/StatusModal";
+import PhoneInput from "@/components/PhoneInput";
+import { genders } from "@/constants/genders";
 import { RegisterFormValues } from "@/types/auth";
 
 const { Title, Text } = Typography;

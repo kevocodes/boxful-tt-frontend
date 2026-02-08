@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { Col, Row } from "antd";
-import LoginBanner from "@/app/assets/images/loginbanner.png";
-import MainStrip from "@/app/assets/svgs/mainstrip.svg";
-import SafetyStrip from "@/app/assets/svgs/safetystrip.svg";
-import ShipmentStrip from "@/app/assets/svgs/shipmentstrip.svg";
-import HorizontalLogo from "@/app/assets/svgs/horizontalLogo.svg";
+import LoginBanner from "@/assets/images/loginbanner.png";
+import MainStrip from "@/assets/svgs/mainstrip.svg";
+import SafetyStrip from "@/assets/svgs/safetystrip.svg";
+import ShipmentStrip from "@/assets/svgs/shipmentstrip.svg";
+import HorizontalLogo from "@/assets/svgs/horizontalLogo.svg";
 
 interface LayoutProps {
   children: React.ReactNode;
