@@ -10,6 +10,7 @@ import StatusModal from "@/components/StatusModal";
 import { ResetPasswordFormValues } from "@/types/auth";
 import { AuthService } from "@/services/auth.service";
 import { ApiResponse } from "@/types/api";
+import { ROUTES } from "@/constants/routes";
 
 const { Title, Text } = Typography;
 
@@ -53,7 +54,7 @@ function ResetPasswordPage() {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    router.push("/login");
+    router.push(ROUTES.LOGIN);
   };
 
   if (isValidatingToken) {
@@ -72,7 +73,7 @@ function ResetPasswordPage() {
           Token inválido o expirado
         </Title>
         <Link
-          href="/login"
+          href={ROUTES.LOGIN}
           className="text-gray-700! font-bold hover:text-gray-500!"
         >
           Volver al inicio de sesión
@@ -111,7 +112,7 @@ function ResetPasswordPage() {
                 </span>
               }
               name="password"
-             rules={[
+              rules={[
                 { required: true, message: "Por favor ingresa tu contraseña" },
                 {
                   pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/,
@@ -121,9 +122,7 @@ function ResetPasswordPage() {
               ]}
               className="mb-4"
             >
-              <Input
-                placeholder="Digita contraseña"
-              />
+              <Input placeholder="Digita contraseña" />
             </Form.Item>
 
             {/* Repetir contraseña */}
@@ -150,9 +149,7 @@ function ResetPasswordPage() {
               ]}
               className="mb-10"
             >
-              <Input
-                placeholder="Digita contraseña"
-              />
+              <Input placeholder="Digita contraseña" />
             </Form.Item>
 
             <Form.Item className="mb-0 flex justify-end">

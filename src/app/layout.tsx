@@ -12,7 +12,10 @@ const monaSans = Mona_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Boxful",
+  title: {
+    default: "Boxful",
+    template: "%s | Boxful",
+  },
   description: "Boxful",
   icons: {
     icon: "/favicon.png",

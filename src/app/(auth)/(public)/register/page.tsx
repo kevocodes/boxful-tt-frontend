@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 import { useRouter } from "next/navigation";
 import { Form, Input, Button, Typography, Select, DatePicker, App } from "antd";
 import {
@@ -18,6 +18,7 @@ import { RegisterFormValues } from "@/types/auth";
 import { useMutation } from "@tanstack/react-query";
 import { getErrorMessage } from "@/utils/error";
 import { registerMapper } from "@/mappers/auth.mapper";
+import Link from "next/link";
 
 const { Title, Text } = Typography;
 
@@ -30,7 +31,7 @@ function RegisterPage() {
     onSuccess: () => {
       message.success("Registro exitoso");
       setIsModalOpen(false);
-      router.push("/login");
+      router.push(ROUTES.LOGIN);
     },
     onError: (error) => {
       const errorMsg = getErrorMessage(error);
@@ -64,7 +65,7 @@ function RegisterPage() {
         <div className="mb-10 lg:text-left lg:w-full">
           <div className="flex items-center mb-2">
             <Link
-              href="/login"
+              href={ROUTES.LOGIN}
               className="text-gray-500! hover:text-gray-700! mr-2"
             >
               <LeftOutlined style={{ fontSize: "16px" }} />

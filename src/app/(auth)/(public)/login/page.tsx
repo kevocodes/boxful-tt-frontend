@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 import { Form, Input, Button, Typography, App } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { LoginFormValues } from "@/types/auth";
@@ -15,7 +16,7 @@ function LoginPage() {
   const router = useRouter();
   const { message } = App.useApp();
 
-  const { mutateAsync: login, isPending: loading } = useMutation({
+  const { mutate: login, isPending: loading } = useMutation({
     mutationFn: async (values: LoginFormValues) => {
       const result = await signIn("credentials", {
         email: values.email,
@@ -31,7 +32,7 @@ function LoginPage() {
     },
     onSuccess: () => {
       message.success("Inicio de sesión exitoso");
-      router.push("/");
+      router.push(ROUTES.HOME);
       router.refresh();
     },
     onError: (error) => {
@@ -39,8 +40,8 @@ function LoginPage() {
     },
   });
 
-  const onFinish = async (values: LoginFormValues) => {
-    await login(values);
+  const onFinish = (values: LoginFormValues) => {
+    login(values);
   };
 
   return (
@@ -104,7 +105,7 @@ function LoginPage() {
 
         <div className="flex justify-end mb-10">
           <Link
-            href="/forgot-password"
+            href={ROUTES.FORGOT_PASSWORD}
             className="text-gray-700! font-bold hover:text-gray-500!"
           >
             ¿Olvidaste tu contraseña?
@@ -127,7 +128,7 @@ function LoginPage() {
           <Text className="text-gray-600">
             ¿Necesitas una cuenta?{" "}
             <Link
-              href="/register"
+              href={ROUTES.REGISTER}
               className="text-gray-700! font-bold hover:text-gray-500!"
             >
               Registrate aqui

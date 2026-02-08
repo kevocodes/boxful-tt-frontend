@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Typography, Input, Button, Statistic, App } from "antd";
 import type { GetProps } from "antd";
+import { ROUTES } from "@/constants/routes";
+import { signOut } from "next-auth/react";
 
 const { Title, Text } = Typography;
 
@@ -70,7 +72,7 @@ function EmailValidationPage() {
           title: "Verificación exitosa",
           description: "Su correo ha sido verificado correctamente.",
         });
-        router.push("/");
+        router.push(ROUTES.HOME);
       } else {
         notification.error({
           title: "Código inválido",
@@ -133,7 +135,7 @@ function EmailValidationPage() {
 
           <Button
             size="large"
-            onClick={() => router.push("/login")}
+            onClick={() => signOut({ callbackUrl: ROUTES.LOGIN })}
             className="w-full"
           >
             Cancelar

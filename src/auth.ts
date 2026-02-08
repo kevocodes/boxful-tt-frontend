@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { ROUTES } from "./constants/routes";
 import { LoginFormValues } from "./types/auth";
 import { AuthService } from "./services/auth.service";
 import { getErrorMessage } from "./utils/error";
@@ -31,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               lastname: data.user.lastname,
               email: data.user.email,
               role: data.user.role,
-              emailVerified: data.user.emailVerified,
+              isVerified: data.user.emailVerified,
             };
           }
 
@@ -51,7 +52,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.name = user.name;
         token.lastname = user.lastname;
         token.role = user.role;
-        token.emailVerified = user.emailVerified as boolean;
+        token.isVerified = user.isVerified as boolean;
         token.email = user.email;
       }
 
@@ -64,13 +65,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.lastname = token.lastname as string;
         session.user.email = token.email as string;
         session.user.role = token.role as string;
+        session.user.isVerified = token.isVerified as boolean;
         session.accessToken = token.accessToken as string;
       }
       return session;
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: ROUTES.LOGIN,
   },
   session: {
     strategy: "jwt",

@@ -9,6 +9,7 @@ import { AuthService } from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { getErrorMessage } from "@/utils/error";
+import { ROUTES } from "@/constants/routes";
 
 const { Title, Text } = Typography;
 
@@ -36,7 +37,7 @@ function ForgotPasswordPage() {
   const handleModalClose = () => {
     setIsModalOpen(false);
     form.resetFields();
-    router.push("/login");
+    router.push(ROUTES.LOGIN);
   };
 
   return (
@@ -47,7 +48,7 @@ function ForgotPasswordPage() {
           <div className="mb-8">
             <div className="flex items-center mb-6">
               <Link
-                href="/login"
+                href={ROUTES.LOGIN}
                 className="text-gray-500! hover:text-gray-700! mr-4 flex items-center"
               >
                 <LeftOutlined style={{ fontSize: "20px" }} />
