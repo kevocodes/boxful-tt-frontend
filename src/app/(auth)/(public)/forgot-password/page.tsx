@@ -3,25 +3,40 @@
 import StatusModal from "../../../../components/StatusModal";
 import Link from "next/link";
 import { useState } from "react";
-import { Form, Input, Button, Typography } from "antd";
+import { Form, Input, Button, Typography, App } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
+import { AuthService } from "@/services/auth.service";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { getErrorMessage } from "@/utils/error";
 
 const { Title, Text } = Typography;
 
 function ForgotPasswordPage() {
+  const { message } = App.useApp();
+  const router = useRouter();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onFinish = (values: { email: string }) => {
-    // Here you would typically call your API to request the password reset
-    console.log("Forgot password requested for:", values.email);
-    setIsModalOpen(true);
+  const { mutateAsync: sendForgotPassword, isPending: loading } = useMutation({
+    mutationFn: (email: string) => AuthService.sendForgotPassword(email),
+    onSuccess: () => {
+      setIsModalOpen(true);
+    },
+    onError: (error) => {
+      const errorMsg = getErrorMessage(error);
+      message.error(errorMsg);
+    },
+  });
+
+  const onFinish = async (values: { email: string }) => {
+    await sendForgotPassword(values.email);
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    // Optionally redirect to login or clear form
-    // form.resetFields();
+    form.resetFields();
+    router.push("/login");
   };
 
   return (
@@ -74,6 +89,7 @@ function ForgotPasswordPage() {
 
             <Form.Item className="mb-0 flex justify-end">
               <Button
+                loading={loading}
                 type="primary"
                 htmlType="submit"
                 className="h-10 font-semibold! text-base! px-8 bg-[#1B1F3B]"

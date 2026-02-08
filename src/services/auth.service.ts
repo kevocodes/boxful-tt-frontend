@@ -20,4 +20,12 @@ export class AuthService {
     );
     return response.data;
   }
+
+  static async sendForgotPassword(email: string): Promise<ApiResponse<void>> {
+    const response = await api.post<ApiResponse<void>>(
+      "/auth/forgot-password",
+      { email },
+    );
+    return response.data;
+  }
 }
