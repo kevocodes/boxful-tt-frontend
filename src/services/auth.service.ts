@@ -53,4 +53,35 @@ export class AuthService {
     );
     return response.data;
   }
+
+  static async sendVerificationEmail(
+    token: string,
+  ): Promise<ApiResponse<string>> {
+    const response = await api.post<ApiResponse<string>>(
+      ROUTES.API.AUTH.SEND_VERIFICATION_EMAIL,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  }
+
+  static async validateVerificationEmail(
+    otp: string,
+    token: string,
+  ): Promise<ApiResponse<void>> {
+    const response = await api.post<ApiResponse<void>>(
+      ROUTES.API.AUTH.VERIFY_EMAIL,
+      { otp },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  }
 }
