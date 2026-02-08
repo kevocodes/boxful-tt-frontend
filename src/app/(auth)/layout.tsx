@@ -18,21 +18,23 @@ function Layout({ children }: LayoutProps) {
         <Col
           xs={24}
           lg={10}
-          className="flex flex-col justify-center items-center p-8 sm:p-10 lg:p-12 bg-white h-full relative z-20"
+          className="flex flex-col p-4 sm:p-10 lg:p-12 bg-white h-full relative z-20 overflow-y-auto"
         >
-              <div className="w-full h-full flex flex-col">
-      {/* Logo */}
-      <div>
-        <Image
-          src={HorizontalLogo}
-          alt="Boxful Logo"
-          width={150}
-          height={40}
-          priority
-        />
-      </div>
-          {children}
-      </div>
+          <div className="w-full min-h-full flex flex-col">
+            {/* Logo */}
+            <div>
+              <Image
+                src={HorizontalLogo}
+                alt="Boxful Logo"
+                width={150}
+                height={40}
+                priority
+              />
+            </div>
+            <div className="flex-1 flex flex-col justify-center">
+              {children}
+            </div>
+          </div>
         </Col>
 
         {/* Right Column (Hidden on mobile) */}

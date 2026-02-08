@@ -59,9 +59,9 @@ function RegisterPage() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center h-full">
+      <div className="flex flex-col mt-10 md:mt-0">
         {/* Header */}
-        <div className="mb-10 text-center lg:text-left lg:w-full">
+        <div className="mb-10 lg:text-left lg:w-full">
           <div className="flex items-center mb-2">
             <Link
               href="/login"
