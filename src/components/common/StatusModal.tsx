@@ -1,0 +1,93 @@
+import { Modal, Button, Typography } from "antd";
+import { WarningFilled, CheckCircleFilled } from "@ant-design/icons";
+import React from "react";
+
+const { Title, Text } = Typography;
+
+interface StatusModalProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirm?: () => void;
+  type: "success" | "warning";
+  title: React.ReactNode;
+  description: React.ReactNode;
+  confirmText?: string;
+  cancelText?: string;
+  showCancel?: boolean;
+  confirmLoading?: boolean;
+}
+
+const StatusModal = ({
+  open,
+  onClose,
+  onConfirm,
+  type,
+  title,
+  description,
+  confirmText = "Aceptar",
+  cancelText = "Cancelar",
+  showCancel = false,
+  confirmLoading = false,
+}: StatusModalProps) => {
+  const isSuccess = type === "success";
+
+  return (
+    <Modal
+      open={open}
+      onCancel={onClose}
+      footer={null}
+      width={400}
+      centered
+      className="text-center"
+      closable={false}
+    >
+      <div className="flex flex-col items-center justify-center py-6 px-4">
+        <div
+          className={`${
+            isSuccess ? "bg-green-100" : "bg-orange-100"
+          } p-4 rounded-full mb-4 aspect-square flex items-center justify-center`}
+        >
+          {isSuccess ? (
+            <CheckCircleFilled className="text-green-500! text-[44px]!" />
+          ) : (
+            <WarningFilled className="text-orange-500! text-[44px]!" />
+          )}
+        </div>
+
+        <Title level={4} className="mb-4 text-center">
+          {title}
+        </Title>
+        <Text className="text-center text-gray-600 mb-8 block">
+          {description}
+        </Text>
+        <div
+          className={`flex gap-4 w-full ${
+            showCancel ? "justify-end" : "justify-center"
+          }`}
+        >
+          {showCancel && (
+            <Button
+              type="default"
+              onClick={onClose}
+              className="font-semibold! flex-1"
+            >
+              {cancelText}
+            </Button>
+          )}
+          <Button
+            type="primary"
+            onClick={onConfirm || onClose}
+            loading={confirmLoading}
+            className={`font-semibold! bg-[#1B1F3B] ${
+              showCancel ? "flex-1" : "w-full"
+            }`}
+          >
+            {confirmText}
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+export default StatusModal;
