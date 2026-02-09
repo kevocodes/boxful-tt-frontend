@@ -44,20 +44,20 @@ const StatusModal = ({
       <div className="flex flex-col items-center justify-center py-6 px-4">
         <div
           className={`${
-            isSuccess ? "bg-green-100" : "bg-orange-100"
+            isSuccess ? "bg-success-light!" : "bg-warning-light!"
           } p-4 rounded-full mb-4 aspect-square flex items-center justify-center`}
         >
           {isSuccess ? (
-            <CheckCircleFilled className="text-green-500! text-[44px]!" />
+            <CheckCircleFilled className="text-success-dark! text-[44px]!" />
           ) : (
-            <WarningFilled className="text-orange-500! text-[44px]!" />
+            <WarningFilled className="text-warning-dark! text-[44px]!" />
           )}
         </div>
 
-        <Title level={4} className="mb-4 text-center">
+        <Title level={4} className="mb-4 text-center text-base-dark!">
           {title}
         </Title>
-        <Text className="text-center text-gray-600 mb-8 block">
+        <Text className="text-center text-base-medium! mb-8 block">
           {description}
         </Text>
         <div
@@ -69,7 +69,7 @@ const StatusModal = ({
             <Button
               type="default"
               onClick={onClose}
-              className="font-semibold! flex-1"
+              className="flex-1"
             >
               {cancelText}
             </Button>
@@ -78,7 +78,7 @@ const StatusModal = ({
             type="primary"
             onClick={onConfirm || onClose}
             loading={confirmLoading}
-            className={`font-semibold! bg-[#1B1F3B] ${
+            className={`${
               showCancel ? "flex-1" : "w-full"
             }`}
           >

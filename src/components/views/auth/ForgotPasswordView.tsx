@@ -10,8 +10,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { getErrorMessage } from "@/utils/error";
 import { ROUTES } from "@/constants/routes";
+import Label from "@/components/common/Label";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 function ForgotPasswordView() {
   const { message } = App.useApp();
@@ -49,11 +50,11 @@ function ForgotPasswordView() {
             <div className="flex items-center mb-6">
               <Link
                 href={ROUTES.LOGIN}
-                className="text-gray-500! hover:text-gray-700! mr-4 flex items-center"
+                className="text-base-medium! hover:text-base-dark! mr-4 flex items-center"
               >
                 <LeftOutlined style={{ fontSize: "20px" }} />
               </Link>
-              <Title level={3} className="m-0! font-bold! text-[#11142D]">
+              <Title level={3} className="m-0! font-bold! text-title!">
                 Recuperacion de contraseña
               </Title>
             </div>
@@ -68,9 +69,6 @@ function ForgotPasswordView() {
             requiredMark={false}
             className="w-full"
           >
-            <Text className="block mb-2 font-semibold text-gray-700 text-[12px]">
-              Digita tu correo electrónico
-            </Text>
             <Form.Item
               name="email"
               rules={[
@@ -84,16 +82,21 @@ function ForgotPasswordView() {
                 },
               ]}
               className="mb-8"
+              label={
+                <Label>
+                  Correo electrónico
+                </Label>
+              }
             >
               <Input placeholder="ejemplo@correo.com" className="h-10" />
             </Form.Item>
 
-            <Form.Item className="mb-0 flex justify-end">
+            <Form.Item className="mt-10!">
               <Button
                 loading={loading}
                 type="primary"
                 htmlType="submit"
-                className="h-10 font-semibold! text-base! px-8 bg-[#1B1F3B]"
+                className="w-full"
               >
                 Verificar
               </Button>

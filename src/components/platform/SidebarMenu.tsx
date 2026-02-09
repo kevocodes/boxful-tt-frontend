@@ -14,6 +14,9 @@ const SidebarMenu = () => {
       selectedKeys={[pathname]}
       style={{ borderRight: 0 }}
       onClick={({ key }) => router.push(key)}
+      classNames={{
+        item: "font-semibold",
+      }}
       items={MENU_ITEMS.map((item) => {
         return {
           key: item.path,

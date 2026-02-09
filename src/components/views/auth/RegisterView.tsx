@@ -19,6 +19,7 @@ import { useMutation } from "@tanstack/react-query";
 import { getErrorMessage } from "@/utils/error";
 import { registerMapper } from "@/mappers/auth.mapper";
 import Link from "next/link";
+import Label from "@/components/common/Label";
 
 const { Title, Text } = Typography;
 
@@ -66,15 +67,15 @@ function RegisterView() {
           <div className="flex items-center mb-2">
             <Link
               href={ROUTES.LOGIN}
-              className="text-gray-500! hover:text-gray-700! mr-2"
+              className="text-base-dark! hover:text-base-light! mr-2"
             >
               <LeftOutlined style={{ fontSize: "16px" }} />
             </Link>
-            <Title level={3} className="m-0! font-bold! text-[#11142D]">
+            <Title level={3} className="m-0! font-bold! text-title!">
               Cuentanos de ti
             </Title>
           </div>
-          <Text className="text-gray-500 text-base">
+          <Text className="text-base-medium text-base">
             Completa la información de registro
           </Text>
         </div>
@@ -93,9 +94,9 @@ function RegisterView() {
             {/* Nombre */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Nombre
-                </span>
+                </Label>
               }
               name="firstName"
               rules={[
@@ -108,9 +109,9 @@ function RegisterView() {
             {/* Apellido */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Apellido
-                </span>
+                </Label>
               }
               name="lastName"
               rules={[
@@ -123,9 +124,9 @@ function RegisterView() {
             {/* Sexo */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Sexo
-                </span>
+                </Label>
               }
               name="gender"
               rules={[
@@ -138,9 +139,9 @@ function RegisterView() {
             {/* Fecha de nacimiento */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Fecha de nacimiento
-                </span>
+                </Label>
               }
               name="birthDate"
               rules={[
@@ -161,9 +162,9 @@ function RegisterView() {
             {/* Correo electrónico */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Correo electrónico
-                </span>
+                </Label>
               }
               name="email"
               rules={[
@@ -183,9 +184,9 @@ function RegisterView() {
             {/* Número de Whatsapp */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Número de Whatsapp
-                </span>
+                </Label>
               }
               name="whatsapp"
               className="mb-0"
@@ -209,9 +210,9 @@ function RegisterView() {
             {/* Contraseña */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Contraseña
-                </span>
+                </Label>
               }
               name="password"
               rules={[
@@ -234,9 +235,9 @@ function RegisterView() {
             {/* Repetir contraseña */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Repetir contraseña
-                </span>
+                </Label>
               }
               name="confirmPassword"
               dependencies={["password"]}
@@ -267,7 +268,7 @@ function RegisterView() {
             <Button
               type="primary"
               htmlType="submit"
-              className="w-full h-10 font-semibold! text-base!"
+              className="w-full"
             >
               Siguiente
             </Button>

@@ -25,12 +25,12 @@ const PlatformLayout = ({ children }: PlatformLayoutProps) => {
       />
 
       <Layout
-        className={`transition-all duration-200 site-layout ml-0 ${
+        className={`bg-muted-light! transition-all duration-200 ml-0 ${
           collapsed ? "md:ml-20" : "md:ml-65"
         }`}
       >
         <Navbar onMenuClick={() => setMobileOpen(true)} />
-        <Content style={{ margin: "36px 36px", overflow: "initial" }}>
+        <Content style={{ overflow: "initial" }} className="p-5 sm:p-9">
           {children}
         </Content>
       </Layout>

@@ -13,12 +13,14 @@ const LogoutMenu = () => {
       onClick={({ key }) => {
         if (key === "logout") signOut();
       }}
+      classNames={{
+        item: "font-semibold",
+      }}
       items={[
         {
           key: "logout",
           icon: <LogoutOutlined />,
           label: "Cerrar sesión",
-          className: "text-red-500 hover:text-red-600",
         },
       ]}
     />

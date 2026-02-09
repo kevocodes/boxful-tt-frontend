@@ -39,7 +39,7 @@ const MobileSidebar = ({ mobileOpen, onClose }: MobileSidebarProps) => {
         </div>
       </div>
       <div className="pt-4">
-        <div className="text-xs text-gray-400 font-bold mb-2 px-4">MENÚ</div>
+        <div className="text-xs text-second-title font-bold mb-2 px-4">MENÚ</div>
         <SidebarMenu />
       </div>
       <div className="absolute bottom-4 left-0 w-full px-2">
