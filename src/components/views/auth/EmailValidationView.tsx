@@ -6,7 +6,10 @@ import { Typography, Input, Button, Statistic, App } from "antd";
 import type { GetProps } from "antd";
 import { ROUTES } from "@/constants/routes";
 import { signOut, useSession } from "next-auth/react";
-import { AuthService } from "@/services/auth.service";
+import {
+  sendVerificationEmail,
+  validateVerificationEmail,
+} from "@/services/auth.service";
 import { AxiosError } from "axios";
 import { ApiResponse } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
@@ -37,7 +40,7 @@ function EmailValidationView() {
   };
 
   const sendVerificationEmailMutation = useMutation({
-    mutationFn: (token: string) => AuthService.sendVerificationEmail(token),
+    mutationFn: (token: string) => sendVerificationEmail(token),
     onSuccess: (data) => {
       if (data.data) {
         startCountdown(data.data);
@@ -69,7 +72,7 @@ function EmailValidationView() {
 
   const verifyEmailMutation = useMutation({
     mutationFn: ({ otp, token }: { otp: string; token: string }) =>
-      AuthService.validateVerificationEmail(otp, token),
+      validateVerificationEmail(otp, token),
     onSuccess: async () => {
       notification.success({
         title: "Verificación exitosa",
@@ -130,11 +133,11 @@ function EmailValidationView() {
   return (
     <div className="flex flex-col justify-center items-center h-full w-full px-4">
       <div className="w-full max-w-md text-center">
-        <Title level={3} className="mb-4 font-bold! text-[#11142D]">
+        <Title level={3} className="mb-4 font-bold! text-title!">
           Verificación de correo electrónico
         </Title>
 
-        <Text className="text-gray-500 mb-6 block">
+        <Text className="text-base-medium! mb-6 block">
           Por favor ingresa el código de verificación enviado a tu cuenta de
           correo electrónico. Podrás recibir un nuevo correo en{" "}
           <span className="inline-block align-middle">
@@ -160,7 +163,7 @@ function EmailValidationView() {
             size="large"
             onClick={handleVerify}
             loading={verifyEmailMutation.isPending}
-            className="w-full bg-[#2563eb] hover:bg-[#1d4ed8]"
+            className="w-full"
           >
             Verificar
           </Button>

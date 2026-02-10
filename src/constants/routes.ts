@@ -8,15 +8,8 @@ export const ROUTES = {
   SHIPMENTS: "/shipments",
   API: {
     AUTH: {
-      LOGIN: "/auth/login",
-      REGISTER: "/auth/register",
-      FORGOT_PASSWORD: "/auth/forgot-password",
-      VERIFY_FORGOT_PASSWORD_TOKEN: "/auth/verify-forgot-password-token",
-      RESET_PASSWORD: "/auth/reset-password",
-      SEND_VERIFICATION_EMAIL: "/auth/send-verification-email",
-      VERIFY_EMAIL: "/auth/verify-email",
       NEXT_AUTH_PREFIX: "/api/auth",
-    },
+    }
   },
 };
 

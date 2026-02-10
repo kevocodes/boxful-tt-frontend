@@ -27,6 +27,7 @@ export interface RegisterDto {
   gender: string;
   birthDate: string;
   phoneNumber: string;
+  phoneExtension: string;
 }
 
 export interface ResetPasswordFormValues {

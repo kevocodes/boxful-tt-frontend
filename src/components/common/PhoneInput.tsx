@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { InputNumber, Select, Space } from "antd";
 import { COUNTRY_CODES } from "../../constants/countries";
 
@@ -14,19 +14,12 @@ interface PhoneInputProps {
   onChange?: (value: PhoneValue) => void;
 }
 
-const PhoneInput = ({
-  value = { countryCode: "+503", number: "" },
-  onChange,
-}: PhoneInputProps) => {
-  const [internalValue, setInternalValue] = useState<PhoneValue>(value);
+const DEFAULT_VALUE = { countryCode: "+503", number: "" };
 
-  useEffect(() => {
-    setInternalValue(value);
-  }, [value]);
+const PhoneInput = ({ value = DEFAULT_VALUE, onChange }: PhoneInputProps) => {
 
   const triggerChange = (changedValue: Partial<PhoneValue>) => {
-    const newValue = { ...internalValue, ...changedValue };
-    setInternalValue(newValue);
+    const newValue = { ...value, ...changedValue };
     onChange?.(newValue);
   };
 
@@ -34,8 +27,8 @@ const PhoneInput = ({
     triggerChange({ countryCode: newCountryCode });
   };
 
-  const onNumberChange = (value: string | number | null) => {
-    triggerChange({ number: value?.toString() || "" });
+  const onNumberChange = (val: string | number | null) => {
+    triggerChange({ number: val?.toString() || "" });
   };
 
   return (
@@ -49,7 +42,7 @@ const PhoneInput = ({
                 .includes(input.toLowerCase()),
           }}
           className="bg-gray-50! w-25!"
-          value={internalValue.countryCode}
+          value={value.countryCode}
           onChange={onCountryChange}
           popupMatchSelectWidth={false}
           optionLabelProp="value"
@@ -75,7 +68,7 @@ const PhoneInput = ({
 
         <InputNumber
           placeholder="0000 0000"
-          value={internalValue.number}
+          value={value.number}
           onChange={onNumberChange}
           type="number"
           controls={false}

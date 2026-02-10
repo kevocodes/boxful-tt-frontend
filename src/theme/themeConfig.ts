@@ -11,10 +11,14 @@ const theme: ThemeConfig = {
   },
   components: {
     Menu: {
-      itemSelectedBg: "#2563EB",
+      itemSelectedBg: "#2E49CE",
       itemSelectedColor: "#ffffff",
       itemMarginBlock: 16,
     },
+    Button: {
+      fontWeight: 600,
+      fontSize: 16
+    }
   },
 };
 

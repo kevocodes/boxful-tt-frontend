@@ -9,6 +9,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { getErrorMessage } from "@/utils/error";
 import { useMutation } from "@tanstack/react-query";
+import Label from "@/components/common/Label";
 
 const { Title, Text } = Typography;
 
@@ -48,10 +49,10 @@ function LoginView() {
     <div className="flex-1 flex flex-col justify-center items-center h-full">
       {/* Header */}
       <div className="mb-10 text-center lg:text-left lg:w-full">
-        <Title level={3} className="mb-2!  font-bold! text-[#11142D]">
+        <Title level={3} className="mb-2!  font-bold! text-title!">
           Bienvenido
         </Title>
-        <Text className="text-gray-500 text-base">
+        <Text className="text-base-medium! text-base">
           Por favor ingresa tus credenciales
         </Text>
       </div>
@@ -67,9 +68,9 @@ function LoginView() {
       >
         <Form.Item
           label={
-            <span className="font-semibold text-gray-700 text-[12px]">
+            <Label>
               Correo Electrónico
-            </span>
+            </Label>
           }
           name="email"
           rules={[
@@ -85,9 +86,9 @@ function LoginView() {
 
         <Form.Item
           label={
-            <span className="font-semibold text-gray-700 text-[12px]">
+            <Label>
               Contraseña
-            </span>
+            </Label>
           }
           name="password"
           className="mb-2!"
@@ -106,7 +107,7 @@ function LoginView() {
         <div className="flex justify-end mb-10">
           <Link
             href={ROUTES.FORGOT_PASSWORD}
-            className="text-gray-700! font-bold hover:text-gray-500!"
+            className="text-base-dark! font-bold hover:text-base-light!"
           >
             ¿Olvidaste tu contraseña?
           </Link>
@@ -116,7 +117,7 @@ function LoginView() {
           <Button
             type="primary"
             htmlType="submit"
-            className="w-full h-10 font-semibold! text-base!"
+            className="w-full"
             loading={loading}
           >
             Iniciar Sesión
@@ -125,11 +126,11 @@ function LoginView() {
 
         {/* Footer */}
         <div className="text-center">
-          <Text className="text-gray-600">
+          <Text className="text-base-medium">
             ¿Necesitas una cuenta?{" "}
             <Link
               href={ROUTES.REGISTER}
-              className="text-gray-700! font-bold hover:text-gray-500!"
+              className="text-base-dark! font-bold hover:text-base-light!"
             >
               Registrate aqui
             </Link>

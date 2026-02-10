@@ -37,8 +37,8 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
         position: "sticky",
         top: 0,
         zIndex: 9,
-        borderBottom: "1px solid #f0f0f0",
       }}
+      className="border-b border-gray-200"
     >
       <div className="flex items-center gap-4">
         <div className="md:hidden">
@@ -49,7 +49,7 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
             style={{ fontSize: "16px", width: 44, height: 44 }}
           />
         </div>
-        <div className="ml-4 flex items-center gap-1 text-xl transition-all duration-200">
+        <div className="ml-4 flex items-center gap-1 text-lg transition-all duration-200">
           {title.split(" ").map((word, index, arr) => (
             <span
               key={index}
@@ -61,7 +61,7 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
         </div>
       </div>
 
-      <p className="font-normal text-base leading-none">
+      <p className="font-normal text-second-title text-base hidden md:block">
         {session?.user?.name} {session?.user?.lastname}
       </p>
     </Header>

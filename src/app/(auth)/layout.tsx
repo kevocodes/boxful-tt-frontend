@@ -5,6 +5,8 @@ import MainStrip from "@/assets/svgs/mainstrip.svg";
 import SafetyStrip from "@/assets/svgs/safetystrip.svg";
 import ShipmentStrip from "@/assets/svgs/shipmentstrip.svg";
 import HorizontalLogo from "@/assets/svgs/horizontalLogo.svg";
+import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -22,7 +24,7 @@ function Layout({ children }: LayoutProps) {
         >
           <div className="w-full min-h-full flex flex-col">
             {/* Logo */}
-            <div>
+            <Link href={ROUTES.LOGIN}>
               <Image
                 src={HorizontalLogo}
                 alt="Boxful Logo"
@@ -30,7 +32,7 @@ function Layout({ children }: LayoutProps) {
                 height={40}
                 priority
               />
-            </div>
+            </Link>
             <div className="flex-1 flex flex-col justify-center">
               {children}
             </div>

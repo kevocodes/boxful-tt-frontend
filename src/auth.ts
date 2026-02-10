@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { ROUTES } from "./constants/routes";
 import { LoginFormValues } from "./types/auth";
-import { AuthService } from "./services/auth.service";
+import { login} from "./services/auth.service";
 import { getErrorMessage } from "./utils/error";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -21,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         try {
-          const response = await AuthService.login({ email, password });
+          const response = await login({ email, password });
           const { data } = response;
 
           if (data && data.access_token && data.user) {

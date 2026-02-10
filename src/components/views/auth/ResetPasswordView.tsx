@@ -8,9 +8,10 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import StatusModal from "@/components/common/StatusModal";
 import { ResetPasswordFormValues } from "@/types/auth";
-import { AuthService } from "@/services/auth.service";
+import { validateResetPasswordToken, resetPassword as resetPasswordService   } from "@/services/auth.service";
 import { ApiResponse } from "@/types/api";
 import { ROUTES } from "@/constants/routes";
+import Label from "@/components/common/Label";
 
 const { Title, Text } = Typography;
 
@@ -23,7 +24,7 @@ function ResetPasswordView() {
 
   const { isLoading: isValidatingToken, isError: isTokenInvalid } = useQuery({
     queryKey: ["validate-reset-token", token],
-    queryFn: () => AuthService.validateResetPasswordToken(token),
+    queryFn: () => validateResetPasswordToken(token),
     enabled: !!token,
     retry: false,
     staleTime: 0,
@@ -31,7 +32,7 @@ function ResetPasswordView() {
   });
 
   const { mutate: resetPassword, isPending: isResetting } = useMutation({
-    mutationFn: AuthService.resetPassword,
+    mutationFn: resetPasswordService,
     onSuccess: () => {
       setIsModalOpen(true);
     },
@@ -61,7 +62,7 @@ function ResetPasswordView() {
     return (
       <div className="flex flex-col justify-center items-center h-full w-full">
         <Spin size="large" />
-        <Text className="mt-4 text-gray-500">Validando token...</Text>
+        <Text className="mt-4 text-base-medium!">Validando token...</Text>
       </div>
     );
   }
@@ -69,12 +70,12 @@ function ResetPasswordView() {
   if (!token || isTokenInvalid) {
     return (
       <div className="flex flex-col justify-center items-center h-full w-full">
-        <Title level={4} className="text-red-500">
+        <Title level={4} className="text-error-dark!">
           Token inválido o expirado
         </Title>
         <Link
           href={ROUTES.LOGIN}
-          className="text-gray-700! font-bold hover:text-gray-500!"
+          className="text-base-dark! font-bold hover:text-base-light!"
         >
           Volver al inicio de sesión
         </Link>
@@ -89,7 +90,7 @@ function ResetPasswordView() {
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center mb-6">
-              <Title level={3} className="m-0! font-bold! text-[#11142D]">
+              <Title level={3} className="m-0! font-bold! text-title!">
                 Nueva Contraseña
               </Title>
             </div>
@@ -107,9 +108,9 @@ function ResetPasswordView() {
             {/* Contraseña */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Digita Contraseña
-                </span>
+                </Label>
               }
               name="password"
               rules={[
@@ -128,9 +129,9 @@ function ResetPasswordView() {
             {/* Repetir contraseña */}
             <Form.Item
               label={
-                <span className="font-semibold text-gray-700 text-[12px]">
+                <Label>
                   Repita Contraseña
-                </span>
+                </Label>
               }
               name="confirmPassword"
               dependencies={["password"]}
@@ -152,12 +153,12 @@ function ResetPasswordView() {
               <Input placeholder="Digita contraseña" />
             </Form.Item>
 
-            <Form.Item className="mb-0 flex justify-end">
+            <Form.Item className="mt-10!">
               <Button
                 type="primary"
                 htmlType="submit"
                 loading={isResetting}
-                className="h-10 font-semibold! text-base! px-8 bg-[#1B1F3B] w-fit ml-auto"
+                className="w-full"
               >
                 Cambiar contraseña
               </Button>
