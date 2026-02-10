@@ -1,16 +1,16 @@
-import { CarOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, TruckFilled } from "@ant-design/icons";
 import { ROUTES } from "@/constants/routes";
 
 export const MENU_ITEMS = [
   {
     key: ROUTES.HOME,
-    icon: <PlusOutlined />,
+    icon: <PlusOutlined style={{ fontSize: "20px" }} />,
     label: "Crear orden",
     path: ROUTES.HOME,
   },
   {
     key: ROUTES.SHIPMENTS,
-    icon: <CarOutlined />,
+    icon: <TruckFilled style={{ fontSize: "20px" }} />,
     label: "Mis envíos",
     path: ROUTES.SHIPMENTS,
   },

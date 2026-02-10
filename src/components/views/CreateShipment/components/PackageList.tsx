@@ -13,11 +13,7 @@ interface PackageListProps {
   onDelete: (id: string) => void;
 }
 
-const PackageList: React.FC<PackageListProps> = ({
-  packages,
-  onUpdate,
-  onDelete,
-}) => {
+const PackageList = ({ packages, onUpdate, onDelete }: PackageListProps) => {
   if (packages.length === 0) return null;
 
   const handleChange = (

@@ -90,6 +90,8 @@ function ShipmentsView() {
     queryFn: () => getShipments(activeQuery, session.data?.accessToken),
     placeholderData: keepPreviousData,
     enabled: !!session.data?.accessToken,
+    gcTime: 0,
+    staleTime: 0,
   });
 
   const handleSearch = () => {
@@ -491,21 +493,22 @@ function ShipmentsView() {
           presets={[
             {
               label: "Últimos 7 días",
-              value: [dayjs().subtract(7, "d"), dayjs()],
+              value: [dayjs().subtract(6, "d"), dayjs()],
             },
             {
               label: "Últimos 15 días",
-              value: [dayjs().subtract(15, "d"), dayjs()],
+              value: [dayjs().subtract(14, "d"), dayjs()],
             },
             {
               label: "Últimos 30 días",
-              value: [dayjs().subtract(30, "d"), dayjs()],
+              value: [dayjs().subtract(29, "d"), dayjs()],
             },
             {
               label: "Últimos 90 días",
-              value: [dayjs().subtract(90, "d"), dayjs()],
+              value: [dayjs().subtract(89, "d"), dayjs()],
             },
           ]}
+          popupClassName="shipments-range-picker-dropdown"
           className="w-full md:w-auto"
         />
         <Button
@@ -552,19 +555,20 @@ function ShipmentsView() {
         title="Detalles de Paquetes"
         open={isPackageModalOpen}
         onCancel={() => setIsPackageModalOpen(false)}
+        centered
         footer={[
           <Button key="close" onClick={() => setIsPackageModalOpen(false)}>
             Cerrar
           </Button>,
         ]}
-        width={700}
+        width={800}
       >
         <Table
           columns={packageColumns}
           dataSource={currentPackages}
           rowKey="id"
           pagination={false}
-          scroll={{ x: true }}
+          scroll={{ x: true, y: 400 }}
           style={{ marginTop: 20 }}
         />
       </Modal>

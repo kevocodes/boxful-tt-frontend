@@ -3,21 +3,21 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --title: #16163D;
+  --title: #16163d;
   --second-title: #161734;
   --label: #050817;
-  --base-dark: #3B3939;
-  --base-medium: #4E4C4C;
+  --base-dark: #3b3939;
+  --base-medium: #4e4c4c;
   --base-light: #636060;
-  --primary: #2E49CE;
-  --warning-light: #FFF6E8;
-  --warning-dark: #FFB745;
+  --primary: #2e49ce;
+  --warning-light: #fff6e8;
+  --warning-dark: #ffb745;
   --success-light: #dcfce7;
   --success-dark: #00c950;
   --error-light: #ffc9c9;
   --error-dark: #fb2c36;
-  --muted-light: #F8F9FA;
-  --muted-medium: #EDEDED;
+  --muted-light: #f8f9fa;
+  --muted-medium: #ededed;
 }
 
 @theme inline {
@@ -52,4 +52,18 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-mona-sans), Helvetica, sans-serif;
+}
+
+@media (max-width: 767px) {
+  .shipments-range-picker-dropdown .ant-picker-panels {
+    flex-direction: column;
+  }
+
+  .shipments-range-picker-dropdown .ant-picker-panel-container {
+    max-width: calc(100vw - 32px);
+  }
+
+  .shipments-range-picker-dropdown .ant-picker-presets {
+    display: none !important;
+  }
 }
