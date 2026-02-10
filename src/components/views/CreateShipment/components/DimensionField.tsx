@@ -1,6 +1,6 @@
 import { Form, Input } from "antd";
 import Label from "@/components/common/Label";
-import { DimensionsValues } from "@/types/order";
+import { DimensionsValues } from "@/types/shipment";
 
 interface DimensionFieldProps {
   field: keyof DimensionsValues;

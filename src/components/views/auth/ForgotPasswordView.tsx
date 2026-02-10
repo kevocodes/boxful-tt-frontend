@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Form, Input, Button, Typography, App } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
-import { AuthService } from "@/services/auth.service";
+import { sendForgotPassword as sendForgotPasswordService } from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { getErrorMessage } from "@/utils/error";
@@ -21,7 +21,7 @@ function ForgotPasswordView() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { mutateAsync: sendForgotPassword, isPending: loading } = useMutation({
-    mutationFn: (email: string) => AuthService.sendForgotPassword(email),
+    mutationFn: (email: string) => sendForgotPasswordService(email),
     onSuccess: () => {
       setIsModalOpen(true);
     },

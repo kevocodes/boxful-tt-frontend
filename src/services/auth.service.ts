@@ -6,59 +6,60 @@ import {
   RegisterDto,
   ResetPasswordDto,
 } from "@/types/auth";
-import { ROUTES } from "@/constants/routes";
 
-export class AuthService {
-  static async login(
+const baseRoute = "/auth";
+
+
+export async function login(
     credentials: LoginFormValues,
   ): Promise<ApiResponse<ValidAuthDto>> {
-    const { data } = await api.post<ApiResponse<ValidAuthDto>>(
-      ROUTES.API.AUTH.LOGIN,
+    const response = await api.post<ApiResponse<ValidAuthDto>>(
+      `${baseRoute}/login`,
       credentials,
     );
-    return data;
+    return response.data;
   }
 
-  static async register(data: RegisterDto): Promise<ApiResponse<ValidAuthDto>> {
+ export async function register(data: RegisterDto): Promise<ApiResponse<ValidAuthDto>> {
     const response = await api.post<ApiResponse<ValidAuthDto>>(
-      ROUTES.API.AUTH.REGISTER,
+      `${baseRoute}/register`,
       data,
     );
     return response.data;
   }
 
-  static async sendForgotPassword(email: string): Promise<ApiResponse<void>> {
+  export async function sendForgotPassword(email: string): Promise<ApiResponse<void>> {
     const response = await api.post<ApiResponse<void>>(
-      ROUTES.API.AUTH.FORGOT_PASSWORD,
+      `${baseRoute}/forgot-password`,
       { email },
     );
     return response.data;
   }
 
-  static async validateResetPasswordToken(
+  export async function validateResetPasswordToken(
     token: string,
   ): Promise<ApiResponse<void>> {
     const response = await api.get<ApiResponse<void>>(
-      `${ROUTES.API.AUTH.VERIFY_FORGOT_PASSWORD_TOKEN}/${token}`,
+      `${baseRoute}/verify-forgot-password-token/${token}`,
     );
     return response.data;
   }
 
-  static async resetPassword(
+  export async function resetPassword(
     data: ResetPasswordDto,
   ): Promise<ApiResponse<void>> {
     const response = await api.patch<ApiResponse<void>>(
-      `${ROUTES.API.AUTH.RESET_PASSWORD}/${data.token}`,
+      `${baseRoute}/reset-password/${data.token}`,
       { password: data.password },
     );
     return response.data;
   }
 
-  static async sendVerificationEmail(
+  export async function sendVerificationEmail(
     token: string,
   ): Promise<ApiResponse<string>> {
     const response = await api.post<ApiResponse<string>>(
-      ROUTES.API.AUTH.SEND_VERIFICATION_EMAIL,
+      `${baseRoute}/send-verification-email`,
       {},
       {
         headers: {
@@ -69,12 +70,12 @@ export class AuthService {
     return response.data;
   }
 
-  static async validateVerificationEmail(
+  export async function validateVerificationEmail(
     otp: string,
     token: string,
   ): Promise<ApiResponse<void>> {
     const response = await api.post<ApiResponse<void>>(
-      ROUTES.API.AUTH.VERIFY_EMAIL,
+      `${baseRoute}/verify-email`,
       { otp },
       {
         headers: {
@@ -84,4 +85,3 @@ export class AuthService {
     );
     return response.data;
   }
-}

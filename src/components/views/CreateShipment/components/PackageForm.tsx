@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Package } from "@/types/order";
+import { Package } from "@/types/shipment";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import packageSvg from "@/assets/svgs/package.svg";

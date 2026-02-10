@@ -1,5 +1,5 @@
 import React from "react";
-import { Package } from "@/types/order";
+import { PackageFormData } from "@/types/shipment";
 import { Button, Input } from "antd";
 import { DeleteFilled } from "@ant-design/icons";
 import Image from "next/image";
@@ -8,8 +8,8 @@ import { DimensionsInputGroup } from "./DimensionsInputGroup";
 import Label from "@/components/common/Label";
 
 interface PackageListProps {
-  packages: Package[];
-  onUpdate: (pkg: Package) => void;
+  packages: PackageFormData[];
+  onUpdate: (pkg: PackageFormData) => void;
   onDelete: (id: string) => void;
 }
 
@@ -22,7 +22,7 @@ const PackageList: React.FC<PackageListProps> = ({
 
   const handleChange = (
     id: string,
-    field: keyof Package,
+    field: keyof PackageFormData,
     value: string | number,
   ) => {
     const pkg = packages.find((p) => p.id === id);

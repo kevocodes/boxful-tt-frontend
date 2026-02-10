@@ -1,8 +1,8 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { OrderFormData, Package } from "@/types/order";
+import { OrderFormData, PackageFormData } from "@/types/shipment";
 import PackageForm from "../PackageForm";
 import PackageList from "../PackageList";
-import { message } from "antd";
+import { App } from "antd";
 
 export interface PackagesStepRef {
   submit: () => Promise<OrderFormData | null>;
@@ -15,7 +15,9 @@ interface PackagesStepProps {
 
 const PackagesStep = forwardRef<PackagesStepRef, PackagesStepProps>(
   ({ initialValues }, ref) => {
-    const [packages, setPackages] = useState<Package[]>(
+    const { message } = App.useApp();
+
+    const [packages, setPackages] = useState<PackageFormData[]>(
       initialValues?.packages || [],
     );
 
@@ -32,11 +34,11 @@ const PackagesStep = forwardRef<PackagesStepRef, PackagesStepProps>(
       },
     }));
 
-    const handleAddPackage = (newPackage: Package) => {
+    const handleAddPackage = (newPackage: PackageFormData) => {
       setPackages([...packages, newPackage]);
     };
 
-    const handleUpdatePackage = (updatedPackage: Package) => {
+    const handleUpdatePackage = (updatedPackage: PackageFormData) => {
       setPackages(
         packages.map((p) => (p.id === updatedPackage.id ? updatedPackage : p)),
       );

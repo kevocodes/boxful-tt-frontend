@@ -8,6 +8,7 @@ export const registerMapper = (data: RegisterFormValues): RegisterDto => {
         password: data.password,
         gender: data.gender,
         birthDate: data.birthDate.toISOString(),
-        phoneNumber: data.whatsapp?.countryCode + " " + data.whatsapp?.number,
+        phoneNumber: data.whatsapp?.number,
+        phoneExtension: data.whatsapp?.countryCode,
     };
 };

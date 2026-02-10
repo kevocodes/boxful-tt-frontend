@@ -1,8 +1,10 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import { Form, Input, DatePicker, Select, Row, Col } from "antd";
 import PhoneInput from "@/components/common/PhoneInput";
-import { OrderFormData } from "@/types/order";
+import { OrderFormData } from "@/types/shipment";
 import Label from "@/components/common/Label";
+import { statesAndCities } from "@/constants/statesAndCities";
+import dayjs from "dayjs";
 
 export interface SenderRecipientStepRef {
   submit: () => Promise<OrderFormData>;
@@ -18,6 +20,7 @@ const SenderRecipientStep = forwardRef<
   SenderRecipientStepProps
 >(({ initialValues }, ref) => {
   const [form] = Form.useForm();
+  const department = Form.useWatch("department", form);
 
   useImperativeHandle(ref, () => ({
     submit: () => {
@@ -58,7 +61,19 @@ const SenderRecipientStep = forwardRef<
           <Form.Item
             label={<Label>Fecha programada</Label>}
             name="scheduledDate"
-            rules={[{ required: true, message: "La fecha es requerida" }]}
+            rules={[
+              { required: true, message: "La fecha es requerida" },
+              {
+                validator: (_, value) => {
+                  if (value && value < dayjs()) {
+                    return Promise.reject(
+                      "La fecha no puede ser menor a la fecha actual",
+                    );
+                  }
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <DatePicker
               className="w-full"
@@ -134,7 +149,13 @@ const SenderRecipientStep = forwardRef<
           >
             <Select
               placeholder="San Salvador"
-              options={[{ value: "San Salvador", label: "San Salvador" }]}
+              options={statesAndCities.states.map((state) => ({
+                value: state.name,
+                label: state.name,
+              }))}
+              onChange={() => {
+                form.setFieldValue("municipality", undefined);
+              }}
             />
           </Form.Item>
         </Col>
@@ -146,7 +167,17 @@ const SenderRecipientStep = forwardRef<
           >
             <Select
               placeholder="San Salvador"
-              options={[{ value: "San Salvador", label: "San Salvador" }]}
+              options={
+                department
+                  ? statesAndCities.states
+                      .find((s) => s.name === department)
+                      ?.cities.map((city) => ({
+                        value: city.name,
+                        label: city.name,
+                      })) || []
+                  : []
+              }
+              disabled={!department}
             />
           </Form.Item>
         </Col>

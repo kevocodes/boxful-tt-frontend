@@ -8,7 +8,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import StatusModal from "@/components/common/StatusModal";
 import { ResetPasswordFormValues } from "@/types/auth";
-import { AuthService } from "@/services/auth.service";
+import { validateResetPasswordToken, resetPassword as resetPasswordService   } from "@/services/auth.service";
 import { ApiResponse } from "@/types/api";
 import { ROUTES } from "@/constants/routes";
 import Label from "@/components/common/Label";
@@ -24,7 +24,7 @@ function ResetPasswordView() {
 
   const { isLoading: isValidatingToken, isError: isTokenInvalid } = useQuery({
     queryKey: ["validate-reset-token", token],
-    queryFn: () => AuthService.validateResetPasswordToken(token),
+    queryFn: () => validateResetPasswordToken(token),
     enabled: !!token,
     retry: false,
     staleTime: 0,
@@ -32,7 +32,7 @@ function ResetPasswordView() {
   });
 
   const { mutate: resetPassword, isPending: isResetting } = useMutation({
-    mutationFn: AuthService.resetPassword,
+    mutationFn: resetPasswordService,
     onSuccess: () => {
       setIsModalOpen(true);
     },

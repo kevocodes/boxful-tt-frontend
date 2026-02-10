@@ -13,7 +13,7 @@ import {
 import StatusModal from "@/components/common/StatusModal";
 import PhoneInput from "@/components/common/PhoneInput";
 import { genders } from "@/constants/genders";
-import { AuthService } from "@/services/auth.service";
+import { register as registerService } from "@/services/auth.service";
 import { RegisterFormValues } from "@/types/auth";
 import { useMutation } from "@tanstack/react-query";
 import { getErrorMessage } from "@/utils/error";
@@ -28,7 +28,7 @@ function RegisterView() {
   const router = useRouter();
 
   const { mutateAsync: register, isPending: loading } = useMutation({
-    mutationFn: AuthService.register,
+    mutationFn: registerService,
     onSuccess: () => {
       message.success("Registro exitoso");
       setIsModalOpen(false);

@@ -1,7 +1,6 @@
-import { DimensionsValues } from "@/types/order";
+import { DimensionsValues } from "@/types/shipment";
 import React from "react";
 import DimensionField from "./DimensionField";
-
 
 interface DimensionsInputGroupProps {
   mode: "form" | "list";

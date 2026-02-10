@@ -8,11 +8,19 @@ import SenderRecipientStep, {
 import PackagesStep, { PackagesStepRef } from "./components/steps/PackagesStep";
 import { Button } from "antd";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { OrderFormData } from "@/types/order";
+import { CreateShipmentDto, OrderFormData } from "@/types/shipment";
 import { usePageTitleStore } from "@/store/usePageTitleStore";
+import { createShipmentMapper } from "@/mappers/shipment.mapper";
+import { useMutation } from "@tanstack/react-query";
+import { createShipment as createShipmentService } from "@/services/shipments.service";
+import { App } from "antd";
+import { useSession } from "next-auth/react";
 
 const RequestOrderView = () => {
+  const session = useSession();
+
   const { setTitle } = usePageTitleStore();
+  const { message } = App.useApp();
 
   useEffect(() => {
     setTitle("Crear orden");
@@ -23,6 +31,19 @@ const RequestOrderView = () => {
 
   const senderRecipientRef = useRef<SenderRecipientStepRef>(null);
   const packagesCourierRef = useRef<PackagesStepRef>(null);
+
+  const { mutateAsync: createShipment, isPending: loading } = useMutation({
+    mutationFn: ({ data, token }: { data: CreateShipmentDto; token: string }) =>
+      createShipmentService(data, token),
+    onSuccess: () => {
+      message.success("Orden creada exitosamente");
+      setFormData({});
+      setCurrentStep(0);
+    },
+    onError: (error) => {
+      message.error(error.message);
+    },
+  });
 
   const next = async () => {
     try {
@@ -39,11 +60,17 @@ const RequestOrderView = () => {
   };
 
   const submitOrder = async () => {
+    const token = session.data?.accessToken;
+    if (!token) {
+      message.error("No tienes permiso para crear una orden");
+      return;
+    }
     try {
       const step2Data = await packagesCourierRef.current?.submit();
       if (step2Data) {
         const finalData = { ...formData, ...step2Data };
-        console.log("Processing Order", finalData);
+        const mappedData = createShipmentMapper(finalData);
+        createShipment({ data: mappedData, token });
       }
     } catch (error) {
       console.error("Validation failed:", error);
@@ -86,7 +113,9 @@ const RequestOrderView = () => {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-3">Crea una orden</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-3">
+          Crea una orden
+        </h2>
         <p className="text-gray-500">
           Dale una ventaja competitiva a tu negocio con entregas{" "}
           <span className="font-bold text-gray-700">el mismo día</span> (Área
@@ -110,6 +139,8 @@ const RequestOrderView = () => {
                   onClick={() => prev()}
                   icon={<ArrowLeftOutlined />}
                   iconPlacement="start"
+                  disabled={loading}
+                  loading={loading}
                 >
                   Regresar
                 </Button>
@@ -124,6 +155,8 @@ const RequestOrderView = () => {
                   onClick={() => next()}
                   icon={<ArrowRightOutlined />}
                   iconPlacement="end"
+                  disabled={loading}
+                  loading={loading}
                 >
                   Siguiente
                 </Button>
@@ -134,6 +167,7 @@ const RequestOrderView = () => {
                   onClick={() => submitOrder()}
                   icon={<ArrowRightOutlined />}
                   iconPlacement="end"
+                  loading={loading}
                 >
                   Enviar
                 </Button>

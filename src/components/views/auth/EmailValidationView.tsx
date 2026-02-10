@@ -6,7 +6,10 @@ import { Typography, Input, Button, Statistic, App } from "antd";
 import type { GetProps } from "antd";
 import { ROUTES } from "@/constants/routes";
 import { signOut, useSession } from "next-auth/react";
-import { AuthService } from "@/services/auth.service";
+import {
+  sendVerificationEmail,
+  validateVerificationEmail,
+} from "@/services/auth.service";
 import { AxiosError } from "axios";
 import { ApiResponse } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
@@ -37,7 +40,7 @@ function EmailValidationView() {
   };
 
   const sendVerificationEmailMutation = useMutation({
-    mutationFn: (token: string) => AuthService.sendVerificationEmail(token),
+    mutationFn: (token: string) => sendVerificationEmail(token),
     onSuccess: (data) => {
       if (data.data) {
         startCountdown(data.data);
@@ -69,7 +72,7 @@ function EmailValidationView() {
 
   const verifyEmailMutation = useMutation({
     mutationFn: ({ otp, token }: { otp: string; token: string }) =>
-      AuthService.validateVerificationEmail(otp, token),
+      validateVerificationEmail(otp, token),
     onSuccess: async () => {
       notification.success({
         title: "Verificación exitosa",
