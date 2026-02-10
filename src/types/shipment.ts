@@ -61,6 +61,7 @@ export interface CreateShipmentDto {
 
 export interface Shipment {
   id: string;
+  orderNumber: string;
   pickupAddress: string;
   scheduledDate: string;
   customerName: string;

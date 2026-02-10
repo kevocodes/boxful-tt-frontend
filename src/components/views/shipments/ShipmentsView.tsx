@@ -39,7 +39,7 @@ function ShipmentsView() {
     limit: Number(searchParams.get("limit")) || 10,
     startDate: searchParams.get("startDate")
       ? searchParams.get("startDate")!
-      : dayjs().subtract(7, "day").toISOString(),
+      : dayjs().subtract(6, "day").toISOString(),
     endDate: searchParams.get("endDate")
       ? searchParams.get("endDate")!
       : dayjs().toISOString(),
@@ -129,7 +129,7 @@ function ShipmentsView() {
       customerCity
     );
 
-    const defaultStart = dayjs().subtract(7, "day");
+    const defaultStart = dayjs().subtract(6, "day");
     const defaultEnd = dayjs();
 
     const isDefaultDate =
@@ -232,8 +232,8 @@ function ShipmentsView() {
   const columns: TableProps<Shipment>["columns"] = [
     {
       title: "No. Orden",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "orderNumber",
+      key: "orderNumber",
       ...getColumnSearchProps("orderId", "No. Orden"),
     },
     {
@@ -508,8 +508,10 @@ function ShipmentsView() {
               value: [dayjs().subtract(89, "d"), dayjs()],
             },
           ]}
-          popupClassName="shipments-range-picker-dropdown"
           className="w-full md:w-auto"
+          classNames={{
+            popup: { root: "shipments-range-picker-dropdown" },
+          }}
         />
         <Button
           type="primary"
