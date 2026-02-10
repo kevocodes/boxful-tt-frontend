@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'nextjs-toploader/app';
 import { Typography, Input, Button, Statistic, App } from "antd";
 import type { GetProps } from "antd";
 import { ROUTES } from "@/constants/routes";

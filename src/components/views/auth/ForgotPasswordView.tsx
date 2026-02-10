@@ -7,7 +7,7 @@ import { Form, Input, Button, Typography, App } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import { sendForgotPassword as sendForgotPasswordService } from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'nextjs-toploader/app';
 import { getErrorMessage } from "@/utils/error";
 import { ROUTES } from "@/constants/routes";
 import Label from "@/components/common/Label";

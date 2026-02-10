@@ -6,7 +6,7 @@ import { Form, Input, Button, Typography, App } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { LoginFormValues } from "@/types/auth";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'nextjs-toploader/app';
 import { getErrorMessage } from "@/utils/error";
 import { useMutation } from "@tanstack/react-query";
 import Label from "@/components/common/Label";

@@ -1,7 +1,9 @@
 "use client";
 
 import { Menu } from "antd";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useRouter } from 'nextjs-toploader/app';
+
 import { MENU_ITEMS } from "@/constants/menu";
 
 const SidebarMenu = () => {
