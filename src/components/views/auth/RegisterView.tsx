@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ROUTES } from "@/constants/routes";
-import { useRouter } from 'nextjs-toploader/app';
+import { useRouter } from "nextjs-toploader/app";
 import { Form, Input, Button, Typography, Select, DatePicker, App } from "antd";
 import {
   EyeInvisibleOutlined,
@@ -20,6 +20,7 @@ import { getErrorMessage } from "@/utils/error";
 import { registerMapper } from "@/mappers/auth.mapper";
 import Link from "next/link";
 import Label from "@/components/common/Label";
+import dayjs from "dayjs";
 
 const { Title, Text } = Typography;
 
@@ -36,6 +37,17 @@ function RegisterView() {
     },
     onError: (error) => {
       const errorMsg = getErrorMessage(error);
+
+      if (errorMsg.toLowerCase().includes("email")) {
+        message.error("Correo electrónico ya registrado");
+        return;
+      }
+
+      if (errorMsg.toLowerCase().includes("phone")) {
+        message.error("Número de teléfono ya registrado");
+        return;
+      }
+
       message.error(errorMsg);
     },
   });
@@ -93,11 +105,7 @@ function RegisterView() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
             {/* Nombre */}
             <Form.Item
-              label={
-                <Label>
-                  Nombre
-                </Label>
-              }
+              label={<Label>Nombre</Label>}
               name="firstName"
               rules={[
                 { required: true, message: "Por favor ingresa tu nombre" },
@@ -108,11 +116,7 @@ function RegisterView() {
 
             {/* Apellido */}
             <Form.Item
-              label={
-                <Label>
-                  Apellido
-                </Label>
-              }
+              label={<Label>Apellido</Label>}
               name="lastName"
               rules={[
                 { required: true, message: "Por favor ingresa tu apellido" },
@@ -123,11 +127,7 @@ function RegisterView() {
 
             {/* Sexo */}
             <Form.Item
-              label={
-                <Label>
-                  Sexo
-                </Label>
-              }
+              label={<Label>Sexo</Label>}
               name="gender"
               rules={[
                 { required: true, message: "Por favor selecciona tu sexo" },
@@ -138,16 +138,22 @@ function RegisterView() {
 
             {/* Fecha de nacimiento */}
             <Form.Item
-              label={
-                <Label>
-                  Fecha de nacimiento
-                </Label>
-              }
+              label={<Label>Fecha de nacimiento</Label>}
               name="birthDate"
               rules={[
                 {
                   required: true,
                   message: "Por favor selecciona tu fecha de nacimiento",
+                },
+                {
+                  validator: (_, value) => {
+                    if (value && value > dayjs()) {
+                      return Promise.reject(
+                        "La fecha de nacimiento no puede ser mayor a la fecha actual",
+                      );
+                    }
+                    return Promise.resolve();
+                  },
                 },
               ]}
             >
@@ -161,11 +167,7 @@ function RegisterView() {
 
             {/* Correo electrónico */}
             <Form.Item
-              label={
-                <Label>
-                  Correo electrónico
-                </Label>
-              }
+              label={<Label>Correo electrónico</Label>}
               name="email"
               rules={[
                 {
@@ -183,11 +185,7 @@ function RegisterView() {
 
             {/* Número de Whatsapp */}
             <Form.Item
-              label={
-                <Label>
-                  Número de Whatsapp
-                </Label>
-              }
+              label={<Label>Número de Whatsapp</Label>}
               name="whatsapp"
               className="mb-0"
               initialValue={{ countryCode: "+503", number: "" }}
@@ -209,11 +207,7 @@ function RegisterView() {
 
             {/* Contraseña */}
             <Form.Item
-              label={
-                <Label>
-                  Contraseña
-                </Label>
-              }
+              label={<Label>Contraseña</Label>}
               name="password"
               rules={[
                 { required: true, message: "Por favor ingresa tu contraseña" },
@@ -234,11 +228,7 @@ function RegisterView() {
 
             {/* Repetir contraseña */}
             <Form.Item
-              label={
-                <Label>
-                  Repetir contraseña
-                </Label>
-              }
+              label={<Label>Repetir contraseña</Label>}
               name="confirmPassword"
               dependencies={["password"]}
               rules={[
@@ -265,11 +255,7 @@ function RegisterView() {
           </div>
 
           <Form.Item className="mt-10! mb-0">
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="w-full"
-            >
+            <Button type="primary" htmlType="submit" className="w-full">
               Siguiente
             </Button>
           </Form.Item>

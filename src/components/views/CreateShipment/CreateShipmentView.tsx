@@ -15,7 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createShipment as createShipmentService } from "@/services/shipments.service";
 import { App } from "antd";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'nextjs-toploader/app';
 import StatusModal from "@/components/common/StatusModal";
 import { ROUTES } from "@/constants/routes";
 
@@ -126,14 +126,14 @@ const RequestOrderView = () => {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-3">
+        <h2 className="text-2xl font-bold text-title mb-3">
           Crea una orden
         </h2>
-        <p className="text-gray-500">
+        <p className="text-base-medium">
           Dale una ventaja competitiva a tu negocio con entregas{" "}
-          <span className="font-bold text-gray-700">el mismo día</span> (Área
+          <span className="font-bold text-base-dark">el mismo día</span> (Área
           Metropolitana) y{" "}
-          <span className="font-bold text-gray-700">el día siguiente</span> a
+          <span className="font-bold text-base-dark">el día siguiente</span> a
           nivel nacional.
         </p>
       </div>
@@ -153,7 +153,6 @@ const RequestOrderView = () => {
                   icon={<ArrowLeftOutlined />}
                   iconPlacement="start"
                   disabled={loading}
-                  loading={loading}
                 >
                   Regresar
                 </Button>
@@ -169,7 +168,6 @@ const RequestOrderView = () => {
                   icon={<ArrowRightOutlined />}
                   iconPlacement="end"
                   disabled={loading}
-                  loading={loading}
                 >
                   Siguiente
                 </Button>

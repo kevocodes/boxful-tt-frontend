@@ -163,6 +163,7 @@ function EmailValidationView() {
             size="large"
             onClick={handleVerify}
             loading={verifyEmailMutation.isPending}
+            disabled={verifyEmailMutation.isPending || otp.length !== 6}
             className="w-full"
           >
             Verificar
@@ -174,6 +175,7 @@ function EmailValidationView() {
               onClick={handleResend}
               className="w-full"
               loading={sendVerificationEmailMutation.isPending}
+              disabled={sendVerificationEmailMutation.isPending || deadline > 0}
             >
               Reenviar código
             </Button>

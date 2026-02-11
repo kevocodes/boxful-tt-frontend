@@ -42,7 +42,7 @@ const Sidebar = ({
           top: 0,
           bottom: 0,
           height: "100vh",
-          zIndex: 10,
+          zIndex: 200,
           background: "#fff",
         }}
       >
@@ -94,7 +94,7 @@ const Sidebar = ({
 
           <div
             onClick={() => onCollapse(!collapsed)}
-            className="absolute -right-3 top-7 bg-white border border-gray-200 rounded-full w-8 h-8 flex items-center justify-center cursor-pointer hover:border-primary hover:text-primary z-50 text-gray-400 shadow-sm transition-colors"
+            className="absolute -right-3 top-7 bg-white border border-gray-200 rounded-full w-8 h-8 flex items-center justify-center cursor-pointer hover:border-primary hover:text-primary text-gray-400 shadow-sm transition-colors"
           >
             {collapsed ? (
               <DoubleRightOutlined style={{ fontSize: "12px" }} />

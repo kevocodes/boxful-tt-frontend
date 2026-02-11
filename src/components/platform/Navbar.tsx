@@ -36,7 +36,7 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
         height: 70,
         position: "sticky",
         top: 0,
-        zIndex: 9,
+        zIndex: 100,
       }}
       className="border-b border-gray-200"
     >
