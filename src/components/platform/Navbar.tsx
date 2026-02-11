@@ -6,8 +6,7 @@ import { usePageTitleStore } from "@/store/usePageTitleStore";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { MENU_ITEMS } from "@/constants/menu";
-import { useBalance } from "@/hooks/useBalance";
-import { useBalanceSSE } from "@/hooks/useBalanceSSE";
+import { AmountToSettle } from "./AmountToSettle";
 
 const { Header } = Layout;
 
@@ -25,9 +24,6 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
-  useBalanceSSE(session?.accessToken);
-  const { data: balance } = useBalance();
 
   return (
     <Header
@@ -53,10 +49,7 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
             style={{ fontSize: "16px", width: 44, height: 44 }}
           />
         </div>
-        <div className="flex items-center gap-2">
-          <p>Balance: {balance?.data?.balance}</p>
-        </div>
-        <div className="ml-4 flex items-center gap-1 text-lg transition-all duration-200">
+        <div className="ml-4 hidden md:flex items-center gap-1 text-lg transition-all duration-200">
           {title.split(" ").map((word, index, arr) => (
             <span
               key={index}
@@ -68,9 +61,12 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
         </div>
       </div>
 
-      <p className="font-normal text-second-title text-base hidden md:block">
-        {session?.user?.name} {session?.user?.lastname}
-      </p>
+      <div className="flex items-center gap-4">
+        <AmountToSettle />
+        <p className="font-normal text-second-title text-base hidden md:block">
+          {session?.user?.name} {session?.user?.lastname}
+        </p>
+      </div>
     </Header>
   );
 };
