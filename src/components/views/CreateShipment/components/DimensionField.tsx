@@ -12,7 +12,7 @@ interface DimensionFieldProps {
   onChange?: (val: string) => void;
 }
 
-const DimensionField: React.FC<DimensionFieldProps> = ({
+const DimensionField = ({
   field,
   label,
   placeholder,
@@ -20,7 +20,7 @@ const DimensionField: React.FC<DimensionFieldProps> = ({
   mode,
   value,
   onChange,
-}) => {
+}: DimensionFieldProps) => {
   const commonInputProps = {
     suffix: <span className="text-gray-400 text-xs">cm</span>,
     type: "number",

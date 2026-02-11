@@ -4,7 +4,7 @@ interface OrderStepperProps {
   currentStep: number;
 }
 
-const OrderStepper: React.FC<OrderStepperProps> = ({ currentStep }) => {
+const OrderStepper = ({ currentStep }: OrderStepperProps) => {
   const steps = [
     {
       title: "Dirección de envio",

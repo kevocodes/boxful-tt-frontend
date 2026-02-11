@@ -15,6 +15,7 @@ interface StatusModalProps {
   cancelText?: string;
   showCancel?: boolean;
   confirmLoading?: boolean;
+  maskClosable?: boolean;
 }
 
 const StatusModal = ({
@@ -28,11 +29,13 @@ const StatusModal = ({
   cancelText = "Cancelar",
   showCancel = false,
   confirmLoading = false,
+  maskClosable = true,
 }: StatusModalProps) => {
   const isSuccess = type === "success";
 
   return (
     <Modal
+      maskClosable={maskClosable}
       open={open}
       onCancel={onClose}
       footer={null}
@@ -78,6 +81,7 @@ const StatusModal = ({
             type="primary"
             onClick={onConfirm || onClose}
             loading={confirmLoading}
+            disabled={confirmLoading}
             className={`${
               showCancel ? "flex-1" : "w-full"
             }`}

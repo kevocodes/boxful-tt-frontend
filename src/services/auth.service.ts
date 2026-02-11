@@ -25,6 +25,7 @@ export async function login(
       `${baseRoute}/register`,
       data,
     );
+
     return response.data;
   }
 

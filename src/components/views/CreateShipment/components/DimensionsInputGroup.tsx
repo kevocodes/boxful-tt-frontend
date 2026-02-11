@@ -8,11 +8,11 @@ interface DimensionsInputGroupProps {
   onChange?: (field: keyof DimensionsValues, value: string) => void;
 }
 
-export const DimensionsInputGroup: React.FC<DimensionsInputGroupProps> = ({
+export const DimensionsInputGroup = ({
   mode,
   values,
   onChange,
-}) => {
+}: DimensionsInputGroupProps) => {
   return (
     <div className="@container/dims w-full min-w-0">
       <div className="flex flex-col @[250px]/dims:flex-row w-full gap-3 @[250px]/dims:gap-0 relative">

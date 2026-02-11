@@ -6,6 +6,7 @@ import { usePageTitleStore } from "@/store/usePageTitleStore";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { MENU_ITEMS } from "@/constants/menu";
+import { AmountToSettle } from "./AmountToSettle";
 
 const { Header } = Layout;
 
@@ -24,7 +25,6 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-
   return (
     <Header
       style={{
@@ -36,7 +36,7 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
         height: 70,
         position: "sticky",
         top: 0,
-        zIndex: 9,
+        zIndex: 100,
       }}
       className="border-b border-gray-200"
     >
@@ -49,7 +49,7 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
             style={{ fontSize: "16px", width: 44, height: 44 }}
           />
         </div>
-        <div className="ml-4 flex items-center gap-1 text-lg transition-all duration-200">
+        <div className="ml-4 hidden md:flex items-center gap-1 text-lg transition-all duration-200">
           {title.split(" ").map((word, index, arr) => (
             <span
               key={index}
@@ -61,9 +61,12 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
         </div>
       </div>
 
-      <p className="font-normal text-second-title text-base hidden md:block">
-        {session?.user?.name} {session?.user?.lastname}
-      </p>
+      <div className="flex items-center gap-4">
+        <AmountToSettle />
+        <p className="font-normal text-second-title text-base hidden md:block">
+          {session?.user?.name} {session?.user?.lastname}
+        </p>
+      </div>
     </Header>
   );
 };

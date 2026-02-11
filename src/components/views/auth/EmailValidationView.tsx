@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'nextjs-toploader/app';
 import { Typography, Input, Button, Statistic, App } from "antd";
 import type { GetProps } from "antd";
 import { ROUTES } from "@/constants/routes";
@@ -163,6 +163,7 @@ function EmailValidationView() {
             size="large"
             onClick={handleVerify}
             loading={verifyEmailMutation.isPending}
+            disabled={verifyEmailMutation.isPending || otp.length !== 6}
             className="w-full"
           >
             Verificar
@@ -174,10 +175,11 @@ function EmailValidationView() {
               onClick={handleResend}
               className="w-full"
               loading={sendVerificationEmailMutation.isPending}
+              disabled={sendVerificationEmailMutation.isPending}
             >
               Reenviar código
             </Button>
-          )}
+           )} 
 
           <Button
             size="large"

@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Package } from "@/types/shipment";
+import { PackageFormData } from "@/types/shipment";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import packageSvg from "@/assets/svgs/package.svg";
@@ -9,22 +9,14 @@ import { DimensionsInputGroup } from "./DimensionsInputGroup";
 import Label from "@/components/common/Label";
 
 interface PackageFormProps {
-  onAdd: (pkg: Package) => void;
+  onAdd: (pkg: PackageFormData) => void;
 }
 
-interface PackageFormValues {
-  length: string;
-  height: string;
-  width: string;
-  weight: string;
-  content: string;
-}
-
-const PackageForm: React.FC<PackageFormProps> = ({ onAdd }) => {
+const PackageForm = ({ onAdd }: PackageFormProps) => {
   const [form] = Form.useForm();
 
-  const handleFinish = (values: PackageFormValues) => {
-    const newPackage: Package = {
+  const handleFinish = (values: PackageFormData) => {
+    const newPackage: PackageFormData = {
       id: uuidv4(),
       length: Number(values.length),
       height: Number(values.height),

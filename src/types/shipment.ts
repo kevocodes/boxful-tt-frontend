@@ -26,6 +26,8 @@ export interface OrderFormData {
   municipality?: string;
   referencePoint?: string;
   instructions?: string;
+  isCod?: boolean;
+  codExpectedAmount?: number;
   packages?: PackageFormData[];
 }
 
@@ -56,13 +58,28 @@ export interface CreateShipmentDto {
   customerCity: string;
   customerReferencePoint: string;
   instructions: string;
+  isCod?: boolean;
+  codExpectedAmount?: number;
   packages: CreatePackageDto[];
+}
+
+export enum ShipmentStatus {
+  CREATED = "CREATED",
+  SCHEDULED = "SCHEDULED",
+  PICKED_UP = "PICKED_UP",
+  IN_TRANSIT = "IN_TRANSIT",
+  DELIVERED = "DELIVERED",
+  PAID = "PAID",
+  CANCELED = "CANCELED",
 }
 
 export interface Shipment {
   id: string;
+  orderNumber: string;
   pickupAddress: string;
   scheduledDate: string;
+  instructions: string;
+  clientId: string;
   customerName: string;
   customerLastname: string;
   customerEmail: string;
@@ -72,7 +89,15 @@ export interface Shipment {
   customerState: string;
   customerCity: string;
   customerReferencePoint: string;
-  instructions: string;
+  status: ShipmentStatus;
+  isCod: boolean;
+  codExpectedAmount?: number;
+  codCollectedAmount?: number;
+  codCollectedAt?: string;
+  shippingCostApplied?: number;
+  codCommissionApplied?: number;
+  settlementAmount?: number;
+
   createdAt: string;
   updatedAt: string;
   packages: Package[];
@@ -88,4 +113,10 @@ export interface Package {
   shipmentId: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface UserBalance {
+  balance: number;
+  currency: string;
+  country: number;
 }

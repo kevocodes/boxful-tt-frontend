@@ -5,6 +5,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import AntdConfigProvider from "@/providers/AntdConfigProvider";
 import SessionProvider from "@/providers/SessionProvider";
 import QueryProvider from "@/providers/QueryProvider";
+import NextTopLoader from "nextjs-toploader";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
@@ -33,7 +34,10 @@ export default function RootLayout({
         <SessionProvider>
           <QueryProvider>
             <AntdRegistry>
-              <AntdConfigProvider>{children}</AntdConfigProvider>
+              <AntdConfigProvider>
+                <NextTopLoader showSpinner={false} color="#FF3401" height={4}/>
+                {children}
+              </AntdConfigProvider>
             </AntdRegistry>
           </QueryProvider>
         </SessionProvider>

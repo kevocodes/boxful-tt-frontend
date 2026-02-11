@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from 'nextjs-toploader/app';
 import { Form, Input, Button, Typography, Spin, notification } from "antd";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -158,6 +159,7 @@ function ResetPasswordView() {
                 type="primary"
                 htmlType="submit"
                 loading={isResetting}
+                disabled={isResetting}
                 className="w-full"
               >
                 Cambiar contraseña
