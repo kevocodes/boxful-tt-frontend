@@ -15,6 +15,9 @@ import { useMutation } from "@tanstack/react-query";
 import { createShipment as createShipmentService } from "@/services/shipments.service";
 import { App } from "antd";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import StatusModal from "@/components/common/StatusModal";
+import { ROUTES } from "@/constants/routes";
 
 const RequestOrderView = () => {
   const session = useSession();
@@ -26,8 +29,10 @@ const RequestOrderView = () => {
     setTitle("Crear orden");
   }, [setTitle]);
 
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<OrderFormData>({});
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const senderRecipientRef = useRef<SenderRecipientStepRef>(null);
   const packagesCourierRef = useRef<PackagesStepRef>(null);
@@ -36,14 +41,22 @@ const RequestOrderView = () => {
     mutationFn: ({ data, token }: { data: CreateShipmentDto; token: string }) =>
       createShipmentService(data, token),
     onSuccess: () => {
-      message.success("Orden creada exitosamente");
-      setFormData({});
-      setCurrentStep(0);
+      setIsSuccessModalOpen(true);
     },
     onError: (error) => {
       message.error(error.message);
     },
   });
+
+  const handleGoHome = () => {
+    router.push(ROUTES.SHIPMENTS);
+  };
+
+  const handleCreateAnother = () => {
+    setIsSuccessModalOpen(false);
+    setFormData({});
+    setCurrentStep(0);
+  };
 
   const next = async () => {
     try {
@@ -176,6 +189,18 @@ const RequestOrderView = () => {
           </div>
         </div>
       </div>
+      <StatusModal
+        maskClosable={false}
+        open={isSuccessModalOpen}
+        onClose={handleGoHome}
+        onConfirm={handleCreateAnother}
+        type="success"
+        title="Orden enviada"
+        description="La orden ha sido creada y programada, puedes verificar el estado de la orden en el listado de envíos."
+        confirmText="Crear otra"
+        cancelText="Ir a envíos"
+        showCancel
+      />
     </div>
   );
 };
