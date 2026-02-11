@@ -16,6 +16,8 @@ export const createShipmentMapper = (
     customerCity: data.municipality || "",
     customerReferencePoint: data.referencePoint || "",
     instructions: data.instructions || "",
+    isCod: data.isCod || false,
+    codExpectedAmount: data.codExpectedAmount || undefined,    
     packages:
       data.packages?.map((pkg) => ({
         content: pkg.content,

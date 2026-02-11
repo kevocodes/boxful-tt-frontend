@@ -1,5 +1,14 @@
 import { forwardRef, useImperativeHandle } from "react";
-import { Form, Input, DatePicker, Select, Row, Col } from "antd";
+import {
+  Form,
+  Input,
+  DatePicker,
+  Select,
+  Row,
+  Col,
+  Switch,
+  InputNumber,
+} from "antd";
 import PhoneInput from "@/components/common/PhoneInput";
 import { OrderFormData } from "@/types/shipment";
 import Label from "@/components/common/Label";
@@ -203,6 +212,51 @@ const SenderRecipientStep = forwardRef<
           </Form.Item>
         </Col>
       </Row>
+      <div className="bg-[#FFF8F6] p-4 rounded-lg mt-6">
+        <div className="flex items-center justify-between mb-4 gap-2">
+          <h4 className="text-title font-bold text-base m-0">
+            Pago contra entrega (PCE)
+          </h4>
+          <Form.Item name="isCod" valuePropName="checked" noStyle>
+            <Switch />
+          </Form.Item>
+        </div>
+        <div className="flex sm:flex-row flex-col items-start sm:items-center justify-start gap-2">
+          <p className="text-base-medium m-0 text-sm">
+            Tu cliente paga el <strong>monto que indiques</strong> al momento de
+            la entrega
+          </p>
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.isCod !== currentValues.isCod
+            }
+          >
+            {({ getFieldValue }) =>
+              getFieldValue("isCod") ? (
+                <Form.Item
+                  className="m-0! w-full! sm:w-auto!"
+                  name="codExpectedAmount"
+                  rules={[
+                    {
+                      required: true,
+                      message: "El monto es requerido",
+                    },
+                  ]}
+                >
+                  <InputNumber
+                    className="w-full!"
+                    prefix="$"
+                    placeholder="00.00"
+                    min={0}
+                    precision={2}
+                  />
+                </Form.Item>
+              ) : null
+            }
+          </Form.Item>
+        </div>
+      </div>
     </Form>
   );
 });

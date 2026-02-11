@@ -1,4 +1,3 @@
-// src/hooks/useBalanceSSE.ts
 "use client";
 
 import { useEffect } from "react";
