@@ -41,8 +41,8 @@ export const ShipmentsFilterBar = ({
       customerCity
     );
 
-    const defaultStart = dayjs().subtract(6, "day");
-    const defaultEnd = dayjs();
+    const defaultStart = dayjs().subtract(6, "day").startOf("day");
+    const defaultEnd = dayjs().endOf("day");
 
     const isDefaultDate =
       startDate &&
@@ -58,15 +58,15 @@ export const ShipmentsFilterBar = ({
       <RangePicker
         allowClear={false}
         value={[
-          filters.startDate ? dayjs(filters.startDate) : null,
-          filters.endDate ? dayjs(filters.endDate) : null,
+          filters.startDate ? dayjs(filters.startDate).startOf("day") : null,
+          filters.endDate ? dayjs(filters.endDate).endOf("day") : null,
         ]}
         onChange={(dates) => {
           if (dates && dates[0] && dates[1]) {
             setFilters((prev) => ({
               ...prev,
-              startDate: dates[0]!.toISOString(),
-              endDate: dates[1]!.toISOString(),
+              startDate: dates[0]!.startOf("day").toISOString(),
+              endDate: dates[1]!.endOf("day").toISOString(),
             }));
           } else {
             setFilters((prev) => {
@@ -80,19 +80,19 @@ export const ShipmentsFilterBar = ({
         presets={[
           {
             label: "Últimos 7 días",
-            value: [dayjs().subtract(6, "d"), dayjs()],
+            value: [dayjs().subtract(6, "d"), dayjs().startOf("day")],
           },
           {
             label: "Últimos 15 días",
-            value: [dayjs().subtract(14, "d"), dayjs()],
+            value: [dayjs().subtract(14, "d"), dayjs().startOf("day")],
           },
           {
             label: "Últimos 30 días",
-            value: [dayjs().subtract(29, "d"), dayjs()],
+            value: [dayjs().subtract(29, "d"), dayjs().startOf("day")],
           },
           {
             label: "Últimos 90 días",
-            value: [dayjs().subtract(89, "d"), dayjs()],
+            value: [dayjs().subtract(89, "d"), dayjs().startOf("day")],
           },
         ]}
         className="w-full md:w-auto"
