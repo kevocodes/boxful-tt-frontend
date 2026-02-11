@@ -90,3 +90,9 @@ export interface Package {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface UserBalance {
+  balance: number;
+  currency: string;
+  country: number;
+}

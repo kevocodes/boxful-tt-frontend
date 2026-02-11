@@ -6,6 +6,8 @@ import { usePageTitleStore } from "@/store/usePageTitleStore";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { MENU_ITEMS } from "@/constants/menu";
+import { useBalance } from "@/hooks/useBalance";
+import { useBalanceSSE } from "@/hooks/useBalanceSSE";
 
 const { Header } = Layout;
 
@@ -24,6 +26,8 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  useBalanceSSE(session?.accessToken);
+  const { data: balance } = useBalance();
 
   return (
     <Header
@@ -48,6 +52,9 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
             onClick={onMenuClick}
             style={{ fontSize: "16px", width: 44, height: 44 }}
           />
+        </div>
+        <div className="flex items-center gap-2">
+          <p>Balance: {balance?.data?.balance}</p>
         </div>
         <div className="ml-4 flex items-center gap-1 text-lg transition-all duration-200">
           {title.split(" ").map((word, index, arr) => (

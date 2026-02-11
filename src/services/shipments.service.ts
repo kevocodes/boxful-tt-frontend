@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import { ApiResponse } from "@/types/api";
-import { CreateShipmentDto, Shipment } from "@/types/shipment";
+import { CreateShipmentDto, Shipment, UserBalance } from "@/types/shipment";
 import { Meta } from "@/types/metadata";
 
 const baseRoute = "/shipments";
@@ -48,6 +48,15 @@ export async function getShipments(
   const response = await api.get<
     ApiResponse<{ items: Shipment[]; meta: Meta }>
   >(`${baseRoute}?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function getBalance(token?: string): Promise<ApiResponse<UserBalance>> {
+  const response = await api.get<ApiResponse<UserBalance>>(`${baseRoute}/me/balance`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
