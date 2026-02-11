@@ -175,11 +175,11 @@ function EmailValidationView() {
               onClick={handleResend}
               className="w-full"
               loading={sendVerificationEmailMutation.isPending}
-              disabled={sendVerificationEmailMutation.isPending || deadline > 0}
+              disabled={sendVerificationEmailMutation.isPending}
             >
               Reenviar código
             </Button>
-          )}
+           )} 
 
           <Button
             size="large"

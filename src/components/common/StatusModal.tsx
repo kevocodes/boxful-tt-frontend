@@ -81,6 +81,7 @@ const StatusModal = ({
             type="primary"
             onClick={onConfirm || onClose}
             loading={confirmLoading}
+            disabled={confirmLoading}
             className={`${
               showCancel ? "flex-1" : "w-full"
             }`}

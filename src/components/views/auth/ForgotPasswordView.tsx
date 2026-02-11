@@ -94,6 +94,7 @@ function ForgotPasswordView() {
             <Form.Item className="mt-10!">
               <Button
                 loading={loading}
+                disabled={loading}
                 type="primary"
                 htmlType="submit"
                 className="w-full"

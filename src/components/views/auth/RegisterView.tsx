@@ -103,7 +103,6 @@ function RegisterView() {
           scrollToFirstError
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
-            {/* Nombre */}
             <Form.Item
               label={<Label>Nombre</Label>}
               name="firstName"
@@ -114,7 +113,6 @@ function RegisterView() {
               <Input placeholder="Digita tu nombre" />
             </Form.Item>
 
-            {/* Apellido */}
             <Form.Item
               label={<Label>Apellido</Label>}
               name="lastName"
@@ -125,7 +123,6 @@ function RegisterView() {
               <Input placeholder="Digita tu apellido" />
             </Form.Item>
 
-            {/* Sexo */}
             <Form.Item
               label={<Label>Sexo</Label>}
               name="gender"
@@ -136,7 +133,6 @@ function RegisterView() {
               <Select placeholder="Seleccionar" options={genders} />
             </Form.Item>
 
-            {/* Fecha de nacimiento */}
             <Form.Item
               label={<Label>Fecha de nacimiento</Label>}
               name="birthDate"
@@ -165,7 +161,6 @@ function RegisterView() {
               />
             </Form.Item>
 
-            {/* Correo electrónico */}
             <Form.Item
               label={<Label>Correo electrónico</Label>}
               name="email"
@@ -183,7 +178,6 @@ function RegisterView() {
               <Input placeholder="Digita correo" />
             </Form.Item>
 
-            {/* Número de Whatsapp */}
             <Form.Item
               label={<Label>Número de Whatsapp</Label>}
               name="whatsapp"
@@ -205,7 +199,6 @@ function RegisterView() {
               <PhoneInput />
             </Form.Item>
 
-            {/* Contraseña */}
             <Form.Item
               label={<Label>Contraseña</Label>}
               name="password"
@@ -226,7 +219,6 @@ function RegisterView() {
               />
             </Form.Item>
 
-            {/* Repetir contraseña */}
             <Form.Item
               label={<Label>Repetir contraseña</Label>}
               name="confirmPassword"
@@ -263,7 +255,6 @@ function RegisterView() {
       </div>
 
       {/* Confirmation Modal */}
-      {/* Status Modal */}
       <StatusModal
         open={isModalOpen}
         onClose={handleModalCancel}

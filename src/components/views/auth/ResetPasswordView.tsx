@@ -159,6 +159,7 @@ function ResetPasswordView() {
                 type="primary"
                 htmlType="submit"
                 loading={isResetting}
+                disabled={isResetting}
                 className="w-full"
               >
                 Cambiar contraseña

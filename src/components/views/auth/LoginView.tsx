@@ -119,6 +119,7 @@ function LoginView() {
             htmlType="submit"
             className="w-full"
             loading={loading}
+            disabled={loading}
           >
             Iniciar Sesión
           </Button>
