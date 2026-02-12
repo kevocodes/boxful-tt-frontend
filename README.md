@@ -1,36 +1,143 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Boxful TT Frontend
 
-## Getting Started
+Aplicación frontend construida con Next.js para la prueba técnica de Boxful. Incluye autenticación, flujo de creación de envíos, listado de envíos y balance en tiempo real (SSE).
 
-First, run the development server:
+## Tabla de contenido
+
+- [Boxful TT Frontend](#boxful-tt-frontend)
+  - [Tabla de contenido](#tabla-de-contenido)
+  - [Stack tecnologico](#stack-tecnologico)
+  - [Requisitos previos](#requisitos-previos)
+  - [Variables de entorno](#variables-de-entorno)
+  - [Ejecucion local](#ejecucion-local)
+  - [Ejecucion con Docker](#ejecucion-con-docker)
+  - [Scripts disponibles](#scripts-disponibles)
+  - [Funcionalidades principales](#funcionalidades-principales)
+  - [Rutas principales](#rutas-principales)
+  - [Integracion con backend](#integracion-con-backend)
+  - [Troubleshooting](#troubleshooting)
+
+## Stack tecnologico
+
+- Next.js 16
+- React 19
+- TypeScript
+- Ant Design
+- NextAuth (Credentials)
+- TanStack Query
+- Axios
+- Zustand
+- SSE con `@microsoft/fetch-event-source`
+
+## Requisitos previos
+
+- Node.js 22+
+- npm 10+
+- Backend ejecutándose (recomendado en `http://localhost:3001`)
+
+## Variables de entorno
+
+Crea tu archivo `.env` a partir de `.env.example`.
+
+```bash
+cp .env.example .env
+```
+
+Variables:
+
+- `FRONTEND_PORT`: Puerto donde corre el frontend en Docker.
+- `NEXT_PUBLIC_API_URL`: URL pública del backend (cliente). Ejemplo: `http://localhost:3001`.
+- `INTERNAL_API_URL`: URL interna para SSR/server-side dentro de Docker. Ejemplo: `http://boxful-api:3001`.
+- `AUTH_SECRET`: Secreto para sesión/auth de NextAuth.
+- `AUTH_URL`: URL pública del frontend. Ejemplo: `http://localhost:3000`.
+- `AUTH_TRUST_HOST`: `true` en entornos donde la app confía en el host/proxy.
+
+## Ejecucion local
+
+1. Instalar dependencias:
+
+```bash
+npm ci
+```
+
+2. Configurar `.env`.
+3. Levantar servidor de desarrollo:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Abrir `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Ejecucion con Docker
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Este `docker-compose.yml` usa la red externa `boxful-network`, por lo que debe existir previamente.
 
-## Learn More
+Si primero levantas el backend con Docker, la red se crea automáticamente.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker compose up --build -d
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+El frontend quedará disponible en el puerto configurado por `FRONTEND_PORT`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts disponibles
 
-## Deploy on Vercel
+- `npm run dev`: Modo desarrollo.
+- `npm run build`: Build de producción.
+- `npm run start`: Ejecuta la build.
+- `npm run lint`: Corre ESLint.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Funcionalidades principales
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Autenticación completa:
+  - Inicio de sesión con credenciales.
+  - Registro de usuario.
+  - Recuperación y restablecimiento de contraseña.
+  - Validación de correo electrónico.
+- Gestión de envíos:
+  - Creación de órdenes con datos de remitente, destinatario y paquetes dinámicos.
+  - Soporte para envíos COD y no COD.
+- Historial de envíos:
+  - Listado paginado y ordenado por fecha.
+  - Filtros por rango de fechas, orden y datos del cliente.
+  - Visualización de detalles de paquetes por envío.
+- Balance en tiempo real:
+  - Consulta de balance acumulado del usuario.
+  - Actualización en vivo mediante SSE (`/shipments/me/balance/stream`) cuando cambia el settlement en backend.
+- Experiencia de plataforma:
+  - Layout responsivo para desktop y móvil.
+  - Navegación con sidebar/navbar y control de sesión.
+
+## Rutas principales
+
+- `/`: Página principal (Crear envío).
+- `/shipments`: Listado de envíos.
+- `/login`: Iniciar sesión.
+- `/register`: Registrarse.
+- `/forgot-password`: Olvidé mi contraseña.
+- `/reset-password/[token]`: Restablecer contraseña.
+- `/email-validation`: Validación de correo electrónico.
+
+## Integracion con backend
+
+El frontend consume endpoints del backend bajo:
+
+- Auth: `/auth/*`
+- Shipments: `/shipments/*`
+- SSE balance: `/shipments/me/balance/stream`
+
+Asegúrate de que:
+
+- `NEXT_PUBLIC_API_URL` apunta al backend accesible desde el navegador.
+- `INTERNAL_API_URL` apunta al backend accesible desde el servidor Next.js (especialmente en Docker).
+- El backend use CORS habilitado para el origen del frontend.
+
+## Troubleshooting
+
+- Error de conexión API en local:
+  - Verifica `NEXT_PUBLIC_API_URL` y que el backend esté levantado.
+- Error en SSR dentro de Docker:
+  - Verifica `INTERNAL_API_URL` (`http://boxful-api:3001` si backend está en la misma red).
+- Problemas de sesión/auth:
+  - Revisa `AUTH_SECRET`, `AUTH_URL` y `AUTH_TRUST_HOST`.
