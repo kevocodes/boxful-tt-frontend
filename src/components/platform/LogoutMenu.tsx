@@ -11,7 +11,7 @@ const LogoutMenu = () => {
       style={{ borderRight: 0 }}
       selectable={false}
       onClick={({ key }) => {
-        if (key === "logout") signOut();
+        if (key === "logout") signOut({ callbackUrl: "/login" });
       }}
       classNames={{
         item: "font-semibold",
