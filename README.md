@@ -1,5 +1,23 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Docker
+
+```bash
+# Requires backend stack running first (it creates boxful-network)
+docker compose up -d --build
+```
+
+Required env vars:
+
+```bash
+AUTH_SECRET=your-secret
+AUTH_TRUST_HOST=true
+AUTH_URL=http://localhost:3000 # must match FRONTEND_PORT
+NEXT_PUBLIC_API_URL=http://localhost:3001
+INTERNAL_API_URL=http://boxful-api:3001
+FRONTEND_PORT=3000
+```
+
 ## Getting Started
 
 First, run the development server:

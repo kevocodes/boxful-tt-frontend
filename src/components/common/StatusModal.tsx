@@ -73,6 +73,7 @@ const StatusModal = ({
               type="default"
               onClick={onClose}
               className="flex-1"
+              disabled={confirmLoading}
             >
               {cancelText}
             </Button>

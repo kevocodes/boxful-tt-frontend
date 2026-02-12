@@ -13,10 +13,10 @@ export const useShipmentsFilter = () => {
     limit: Number(searchParams.get("limit")) || 10,
     startDate: searchParams.get("startDate")
       ? searchParams.get("startDate")!
-      : dayjs().subtract(6, "day").toISOString(),
+      : dayjs().subtract(6, "day").startOf("day").toISOString(),
     endDate: searchParams.get("endDate")
       ? searchParams.get("endDate")!
-      : dayjs().toISOString(),
+      : dayjs().endOf("day").toISOString(),
     orderId: searchParams.get("orderId") || undefined,
     customerName: searchParams.get("customerName") || undefined,
     customerLastname: searchParams.get("customerLastname") || undefined,
@@ -63,8 +63,8 @@ export const useShipmentsFilter = () => {
   };
 
   const handleClearAll = () => {
-    const defaultStart = dayjs().subtract(6, "day").toISOString();
-    const defaultEnd = dayjs().toISOString();
+    const defaultStart = dayjs().subtract(6, "day").startOf("day").toISOString();
+    const defaultEnd = dayjs().endOf("day").toISOString();
 
     const resetState = {
       page: 1,
